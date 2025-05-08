@@ -34,5 +34,12 @@
         [currentDate]="currentDate"
       ></app-moon-phase>
     </div>
+    <div class="bento-item pressure-info">
+      <app-pressure-info
+        [currentDate]="currentDate"
+        [pressure]="atmosphericPressure"
+        [trend]="pressureTrend"
+      ></app-pressure-info>
+    </div>
   </div>
 </div>

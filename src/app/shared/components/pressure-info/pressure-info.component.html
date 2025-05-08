@@ -1,0 +1,32 @@
+<div class="pressure-card">
+  <div class="pressure-header">
+    <h2>Presión Atmosférica</h2>
+    <div class="current-date">{{ currentDate | date:'dd/MM/yyyy' }}</div>
+  </div>
+  
+  <div class="pressure-content">
+    <div class="pressure-display">
+      <div class="pressure-value">
+        {{ pressure }} <span class="units">hPa</span>
+        <span class="trend-icon">{{ trendIcon }}</span>
+      </div>
+      <div class="pressure-category">
+        {{ pressureCategory }}
+      </div>
+    </div>
+    
+    <div class="pressure-forecast">
+      <h3>Pronóstico:</h3>
+      <p>{{ weatherForecast }}</p>
+      
+      <div class="pressure-info">
+        <p>La presión atmosférica es el peso del aire sobre la superficie terrestre.</p>
+        <ul>
+          <li>Presión normal: ~1013 hPa</li>
+          <li>Alta presión suele indicar buen tiempo</li>
+          <li>Baja presión suele asociarse con lluvia</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

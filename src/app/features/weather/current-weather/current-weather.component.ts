@@ -10,6 +10,7 @@ import { ForecastComponent } from '../../../shared/components/forecast/forecast.
 import { WindInfoComponent } from '../../../shared/components/wind-info/wind-info.component';
 import { UvIndicatorComponent } from '../../../shared/components/uv-indicator/uv-indicator.component';
 import { MoonPhaseComponent } from '../../../shared/components/moon-phase/moon-phase.component';
+import { PressureInfoComponent } from '../../../shared/components/pressure-info/pressure-info.component';
 
 @Component({
   selector: 'app-current-weather',
@@ -25,6 +26,7 @@ import { MoonPhaseComponent } from '../../../shared/components/moon-phase/moon-p
     WindInfoComponent,
     UvIndicatorComponent,
     MoonPhaseComponent,
+    PressureInfoComponent,
   ],
 })
 export class CurrentWeatherComponent implements OnInit, OnDestroy {
@@ -42,6 +44,10 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
   
   // Propiedad para el índice UV
   uvIndex = 7; // Índice UV (escala 0-11+)
+  
+  // Propiedades para la presión atmosférica
+  atmosphericPressure = 1013; // hPa
+  pressureTrend = 'stable'; // 'rising', 'falling', 'stable'
 
   isMobile = false;
   private destroy$ = new Subject<void>();

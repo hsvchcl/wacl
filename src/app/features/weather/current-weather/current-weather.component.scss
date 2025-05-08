@@ -291,6 +291,16 @@
   }
 }
 
+.pressure-info {
+  grid-column: span 1;
+
+  app-pressure-info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+}
+
 .forecast {
   grid-column: span 2;
   grid-row: span 1;
@@ -347,7 +357,8 @@
   .wind-info,
   .forecast,
   .uv-info,
-  .moon-info {
+  .moon-info,
+  .pressure-info {
     grid-column: span 1;
   }
 }
