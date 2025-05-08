@@ -7,7 +7,7 @@
   .forecast-card {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    background: linear-gradient(135deg, #4287f5, #3562a5);
     color: white;
     border-radius: 16px;
     overflow: hidden;
@@ -33,6 +33,7 @@
       font-size: 1.5rem;
       font-weight: 600;
       color: rgba(255, 255, 255, 0.95);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
   }
   
@@ -48,8 +49,14 @@
       min-width: 120px;
       text-align: center;
       padding: 1rem;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
       border-radius: 12px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
       
       .day {
         font-size: 1.1rem;
@@ -59,10 +66,11 @@
       }
       
       .weather-icon {
-        font-size: 2rem;
-        height: 2rem;
-        width: 2rem;
+        font-size: 2.2rem;
+        height: 2.2rem;
+        width: 2.2rem;
         margin: 0.5rem 0;
+        color: white;
       }
       
       .temp {
@@ -74,6 +82,35 @@
       .condition {
         font-size: 0.9rem;
         color: rgba(255, 255, 255, 0.8);
+      }
+      
+      // Colores específicos según condición climática
+      &:has(.condition:contains("Soleado")) {
+        background: linear-gradient(135deg, #ffa726, #f57c00);
+        .weather-icon {
+          color: #ffeb3b;
+        }
+      }
+      
+      &:has(.condition:contains("Lluvioso")) {
+        background: linear-gradient(135deg, #546e7a, #37474f);
+        .weather-icon {
+          color: #90caf9;
+        }
+      }
+      
+      &:has(.condition:contains("Parcialmente nublado")) {
+        background: linear-gradient(135deg, #78909c, #546e7a);
+        .weather-icon {
+          color: #eceff1;
+        }
+      }
+      
+      &:has(.condition:contains("Nublado")) {
+        background: linear-gradient(135deg, #90a4ae, #607d8b);
+        .weather-icon {
+          color: #e0e0e0;
+        }
       }
     }
   }

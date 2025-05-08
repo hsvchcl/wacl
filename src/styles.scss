@@ -31,10 +31,10 @@ body {
   border-radius: 8px;
   
   &.mat-mdc-card {
-    transition: transform 0.3s ease;
+    transition: none;
     
     &:hover {
-      transform: translateY(-5px);
+      transform: none;
     }
   }
 }

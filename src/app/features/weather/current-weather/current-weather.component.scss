@@ -61,7 +61,7 @@
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, minmax(300px, auto));
+  grid-template-rows: auto auto auto;
   gap: 12px;
   padding: 12px;
   max-width: 1200px;
@@ -312,6 +312,17 @@
   }
 }
 
+.forecast.full-width {
+  grid-column: 1 / -1;  // Expande a todo el ancho (todas las columnas)
+  grid-row: span 1;
+
+  app-forecast {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+}
+
 @media (max-width: 600px) {
   .weather-card {
     margin: 0.5rem;
@@ -355,7 +366,7 @@
 
   .main-weather,
   .wind-info,
-  .forecast,
+  .forecast.full-width,
   .uv-info,
   .moon-info,
   .pressure-info {

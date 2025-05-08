@@ -1,28 +1,6 @@
 <div class="bento-grid-container">
   <div class="bento-grid">
-    <div class="bento-item main-weather">
-      <app-weather-card
-        [currentDate]="currentDate"
-        [temperature]="temperature"
-        [weatherCondition]="weatherCondition"
-        [humidity]="humidity"
-        [windSpeed]="windSpeed"
-      ></app-weather-card>
-    </div>
-    <div class="bento-item main-weather">
-      <app-forecast></app-forecast>
-    </div>
-    <div class="bento-item wind-info">
-      <app-wind-info
-        [currentDate]="currentDate"
-        [windSpeed]="windSpeed"
-        [windDirection]="windDirection"
-        [windGust]="windGust"
-        [windPressure]="windPressure"
-        [beaufortScale]="beaufortScale"
-      >
-      </app-wind-info>
-    </div>
+    <!-- Primera fila: Índice UV, Calendario Lunar, Presión Atmosférica -->
     <div class="bento-item uv-info">
       <app-uv-indicator
         [currentDate]="currentDate"
@@ -40,6 +18,33 @@
         [pressure]="atmosphericPressure"
         [trend]="pressureTrend"
       ></app-pressure-info>
+    </div>
+    
+    <!-- Segunda fila: Pronóstico semanal a todo ancho -->
+    <div class="bento-item forecast full-width">
+      <app-forecast></app-forecast>
+    </div>
+    
+    <!-- Tercera fila: Clima actual e información del viento -->
+    <div class="bento-item main-weather">
+      <app-weather-card
+        [currentDate]="currentDate"
+        [temperature]="temperature"
+        [weatherCondition]="weatherCondition"
+        [humidity]="humidity"
+        [windSpeed]="windSpeed"
+      ></app-weather-card>
+    </div>
+    <div class="bento-item wind-info">
+      <app-wind-info
+        [currentDate]="currentDate"
+        [windSpeed]="windSpeed"
+        [windDirection]="windDirection"
+        [windGust]="windGust"
+        [windPressure]="windPressure"
+        [beaufortScale]="beaufortScale"
+      >
+      </app-wind-info>
     </div>
   </div>
 </div>

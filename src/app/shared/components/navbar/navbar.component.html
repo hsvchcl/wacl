@@ -9,7 +9,7 @@
       <div class="bento-nav-items">
         <button mat-button class="bento-button" routerLink="/current">
           <mat-icon>wb_sunny</mat-icon>
-          <span>Clima Actual</span>
+          <span>Clima Actual en {{currentCity ? currentCity : 'cargando...'}}</span>
         </button>
       </div>
     </div>
@@ -25,6 +25,6 @@
 <div class="mobile-menu bento-mobile-menu" [class.show]="isMenuOpen">
   <button mat-button class="bento-mobile-button" routerLink="/current" (click)="toggleMenu()">
     <mat-icon>wb_sunny</mat-icon>
-    <span>Clima Actual</span>
+    <span>Clima Actual en {{currentCity ? currentCity : 'cargando...'}}</span>
   </button>
 </div>
