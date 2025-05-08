@@ -1,14 +1,38 @@
-<div class="bento-grid">
-  <div class="bento-item main-weather">
-    <app-weather-card
-      [currentDate]="currentDate"
-      [temperature]="temperature"
-      [weatherCondition]="weatherCondition"
-      [humidity]="humidity"
-      [windSpeed]="windSpeed"
-    ></app-weather-card>
-  </div>
-  <div class="bento-item forecast">
-    <app-forecast></app-forecast>
+<div class="bento-grid-container">
+  <div class="bento-grid">
+    <div class="bento-item main-weather">
+      <app-weather-card
+        [currentDate]="currentDate"
+        [temperature]="temperature"
+        [weatherCondition]="weatherCondition"
+        [humidity]="humidity"
+        [windSpeed]="windSpeed"
+      ></app-weather-card>
+    </div>
+    <div class="bento-item main-weather">
+      <app-forecast></app-forecast>
+    </div>
+    <div class="bento-item wind-info">
+      <app-wind-info
+        [currentDate]="currentDate"
+        [windSpeed]="windSpeed"
+        [windDirection]="windDirection"
+        [windGust]="windGust"
+        [windPressure]="windPressure"
+        [beaufortScale]="beaufortScale"
+      >
+      </app-wind-info>
+    </div>
+    <div class="bento-item uv-info">
+      <app-uv-indicator
+        [currentDate]="currentDate"
+        [uvIndex]="uvIndex"
+      ></app-uv-indicator>
+    </div>
+    <div class="bento-item moon-info">
+      <app-moon-phase
+        [currentDate]="currentDate"
+      ></app-moon-phase>
+    </div>
   </div>
 </div>

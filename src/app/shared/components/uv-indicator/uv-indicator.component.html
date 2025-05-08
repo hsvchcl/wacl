@@ -1,0 +1,28 @@
+<div class="uv-card">
+  <div class="uv-header">
+    <h2>Índice UV</h2>
+    <div class="current-date">{{ currentDate | date:'dd/MM/yyyy' }}</div>
+  </div>
+  
+  <div class="uv-content">
+    <div class="uv-index-container">
+      <div class="uv-index" [ngStyle]="{'background-color': uvRiskColor}">
+        {{ uvIndex }}
+      </div>
+      <div class="uv-level">
+        {{ uvRiskLevel }}
+      </div>
+    </div>
+    
+    <div class="uv-recommendations">
+      <h3>Recomendaciones:</h3>
+      <ul>
+        <li *ngIf="uvIndex < 3">Puede estar afuera sin protección especial.</li>
+        <li *ngIf="uvIndex >= 3 && uvIndex < 6">Use protector solar y sombrero.</li>
+        <li *ngIf="uvIndex >= 6 && uvIndex < 8">Use protección solar con FPS 30+, busque sombra.</li>
+        <li *ngIf="uvIndex >= 8 && uvIndex < 11">Use protector solar, sombrero y evite el sol entre 10am-4pm.</li>
+        <li *ngIf="uvIndex >= 11">¡Extrema precaución! Evite estar afuera durante el mediodía.</li>
+      </ul>
+    </div>
+  </div>
+</div>

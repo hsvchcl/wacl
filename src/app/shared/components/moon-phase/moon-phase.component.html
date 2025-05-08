@@ -1,0 +1,36 @@
+<div class="moon-card">
+  <div class="moon-header">
+    <h2>Calendario Lunar</h2>
+    <div class="current-date">{{ currentDate | date:'dd/MM/yyyy' }}</div>
+  </div>
+
+  <div class="moon-content">
+    <div class="moon-phase-container">
+      <div class="moon-icon">{{ moonPhaseIcon }}</div>
+      <div class="moon-info">
+        <div class="moon-phase-name">{{ moonPhase }}</div>
+        <div class="moon-illumination">Iluminación: {{ moonIllumination }}%</div>
+      </div>
+    </div>
+
+    <div class="moon-cycle">
+      <div class="cycle-progress">
+        <div class="progress-bar">
+          <div class="progress" [style.width]="moonPhasePercentage + '%'"></div>
+        </div>
+        <div class="cycle-icons">
+          <span>🌑</span>
+          <span>🌓</span>
+          <span>🌕</span>
+          <span>🌗</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="full-moon-info">
+      <h3>Próxima Luna Llena</h3>
+      <p>{{ nextFullMoon | date:'dd/MM/yyyy' }}</p>
+      <p>En {{ daysUntilFullMoon }} días</p>
+    </div>
+  </div>
+</div>
