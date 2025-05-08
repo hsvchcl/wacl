@@ -1,0 +1,46 @@
+<mat-toolbar class="bento-toolbar">
+  <div class="bento-container">
+    <div class="bento-brand">
+      <span class="app-title">Weather App</span>
+    </div>
+    
+    <!-- Botones para pantalla grande -->
+    <div class="desktop-menu">
+      <div class="bento-nav-items">
+        <button mat-button class="bento-button" routerLink="/current">
+          <mat-icon>wb_sunny</mat-icon>
+          <span>Clima Actual</span>
+        </button>
+        <button mat-button class="bento-button" routerLink="/forecast">
+          <mat-icon>date_range</mat-icon>
+          <span>Pronóstico</span>
+        </button>
+        <button mat-button class="bento-button" routerLink="/cities">
+          <mat-icon>location_city</mat-icon>
+          <span>Principales Ciudades</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Botón de menú móvil -->
+    <button mat-icon-button class="mobile-menu-button bento-menu-button" (click)="toggleMenu()">
+      <mat-icon>{{isMenuOpen ? 'close' : 'menu'}}</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<!-- Menú móvil desplegable -->
+<div class="mobile-menu bento-mobile-menu" [class.show]="isMenuOpen">
+  <button mat-button class="bento-mobile-button" routerLink="/current" (click)="toggleMenu()">
+    <mat-icon>wb_sunny</mat-icon>
+    <span>Clima Actual</span>
+  </button>
+  <button mat-button class="bento-mobile-button" routerLink="/forecast" (click)="toggleMenu()">
+    <mat-icon>date_range</mat-icon>
+    <span>Pronóstico</span>
+  </button>
+  <button mat-button class="bento-mobile-button" routerLink="/cities" (click)="toggleMenu()">
+    <mat-icon>location_city</mat-icon>
+    <span>Principales Ciudades</span>
+  </button>
+</div>

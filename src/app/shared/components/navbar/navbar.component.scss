@@ -1,0 +1,236 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.desktop-menu {
+  display: flex;
+  align-items: center;
+
+  button {
+    font-size: 1.1rem;
+    padding: 0 16px;
+  }
+}
+
+.mobile-menu-button {
+  display: none;
+  background: transparent;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+
+  &:hover {
+    background: rgba(148, 53, 125, 0.1);
+  }
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 55px;
+  left: 16px;
+  right: 16px;
+  background-color: #94357d;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  flex-direction: column;
+  padding: 8px;
+  z-index: 999;
+  transform: translateY(-150%);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  pointer-events: none;
+  border-radius: 0 0 8px 8px;
+
+  button {
+    width: 100%;
+    text-align: left;
+    padding: 16px;
+    margin: 0;
+    color: white;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    transition: background-color 0.2s ease;
+
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+
+    &:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+  }
+
+  &.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  span {
+    font-size: 1.3rem;
+  }
+
+  button {
+    margin: 0 8px;
+  }
+}
+
+:host {
+  padding-top: 90px;
+  display: block;
+}
+
+.bento-toolbar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 1200px;
+  z-index: 1001;
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bento-container {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+}
+
+.bento-brand {
+  .app-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: linear-gradient(45deg, #94357d, #4a90e2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.bento-nav-items {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0.3rem;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.bento-button {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background: transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+
+  &:hover {
+    background: rgba(148, 53, 125, 0.15);
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: rgba(148, 53, 125, 0.2);
+    color: #94357d;
+  }
+
+  mat-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    margin-right: 4px;
+  }
+
+  span {
+    font-weight: 500;
+  }
+}
+
+.bento-mobile-menu {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  margin: 1rem;
+  padding: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  .bento-mobile-button {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+    background: transparent;
+    border: 1px solid rgba(148, 53, 125, 0.1);
+    
+    &:hover {
+      background: rgba(148, 53, 125, 0.1);
+    }
+
+    &.active {
+      background: rgba(148, 53, 125, 0.2);
+      color: #94357d;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :host {
+    padding-top: 80px;
+  }
+
+  .bento-toolbar {
+    top: 12px;
+    border-radius: 25px;
+  }
+
+  .desktop-menu {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bento-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    width: 90%;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1000;
+
+    &.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}

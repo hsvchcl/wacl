@@ -1,0 +1,35 @@
+<div class="weather-card-container">
+  <mat-card class="weather-card">
+    <div class="card-content">
+      <div class="weather-header">
+        <h2 class="title">Clima Actual</h2>
+        <span class="date">{{ currentDate | date : "medium" }}</span>
+      </div>
+      
+      <div class="weather-main">
+        <div class="temperature-display">
+          <span class="temp-value">{{ temperature }}°</span>
+          <span class="temp-unit">C</span>
+        </div>
+        <div class="condition">{{ weatherCondition }}</div>
+      </div>
+
+      <div class="weather-details">
+        <div class="detail-item">
+          <mat-icon class="detail-icon">opacity</mat-icon>
+          <div class="detail-info">
+            <span class="detail-label">Humedad</span>
+            <span class="detail-value">{{ humidity }}%</span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon class="detail-icon">air</mat-icon>
+          <div class="detail-info">
+            <span class="detail-label">Viento</span>
+            <span class="detail-value">{{ windSpeed }} km/h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

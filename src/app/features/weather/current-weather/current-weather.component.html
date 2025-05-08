@@ -1,0 +1,14 @@
+<div class="bento-grid">
+  <div class="bento-item main-weather">
+    <app-weather-card
+      [currentDate]="currentDate"
+      [temperature]="temperature"
+      [weatherCondition]="weatherCondition"
+      [humidity]="humidity"
+      [windSpeed]="windSpeed"
+    ></app-weather-card>
+  </div>
+  <div class="bento-item forecast">
+    <app-forecast></app-forecast>
+  </div>
+</div>
