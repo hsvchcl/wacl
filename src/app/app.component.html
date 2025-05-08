@@ -1,7 +1,17 @@
 <div class="app-container">
-  <app-navbar></app-navbar>
-  <main class="app-content">
-    <router-outlet></router-outlet>
-  </main>
-  <app-footer></app-footer>
+  <app-welcome></app-welcome>
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <p>Obteniendo ubicación del cliente...</p>
+      </div>
+    </div>
+  } @else {
+    <app-navbar></app-navbar>
+    <main class="app-content">
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+  }
 </div>

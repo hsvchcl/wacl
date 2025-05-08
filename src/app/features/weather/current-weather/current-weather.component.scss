@@ -323,6 +323,18 @@
   }
 }
 
+.greeting.full-width {
+  grid-column: 1 / -1;
+  grid-row: span 1;
+  border-radius: 12px;
+  
+  app-user-greeting {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+}
+
 @media (max-width: 600px) {
   .weather-card {
     margin: 0.5rem;

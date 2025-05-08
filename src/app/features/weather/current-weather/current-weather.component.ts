@@ -12,6 +12,7 @@ import { UvIndicatorComponent } from '../../../shared/components/uv-indicator/uv
 import { MoonPhaseComponent } from '../../../shared/components/moon-phase/moon-phase.component';
 import { PressureInfoComponent } from '../../../shared/components/pressure-info/pressure-info.component';
 import { WeatherService } from '../../../shared/services/weather.service';
+import { UserGreetingComponent } from '../../../shared/components/user-greeting/user-greeting.component';
 
 @Component({
   selector: 'app-current-weather',
@@ -28,6 +29,7 @@ import { WeatherService } from '../../../shared/services/weather.service';
     UvIndicatorComponent,
     MoonPhaseComponent,
     PressureInfoComponent,
+    UserGreetingComponent,
   ],
 })
 export class CurrentWeatherComponent implements OnInit, OnDestroy {

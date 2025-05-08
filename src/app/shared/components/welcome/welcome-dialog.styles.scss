@@ -1,0 +1,51 @@
+.welcome-dialog {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.9));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+p {
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+}
+
+::ng-deep .cdk-overlay-backdrop.backdrop-blur {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+::ng-deep .modern-dialog {
+  animation: fadeInUp 0.3s ease-out;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+::ng-deep .modern-dialog .mat-mdc-dialog-container {
+  border-radius: 12px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

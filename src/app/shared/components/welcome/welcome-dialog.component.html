@@ -1,0 +1,24 @@
+<div class="welcome-dialog">
+  <h2 mat-dialog-title>¡Bienvenido a Weather App!</h2>
+  <mat-dialog-content>
+    <p>Para personalizar tu experiencia, por favor ingresa tus datos:</p>
+    <form #userForm="ngForm">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="userName" name="name" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" [(ngModel)]="userEmail" name="email" required email>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" 
+            [disabled]="!userForm.valid"
+            (click)="save()">
+      Continuar
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -25,6 +25,14 @@ body {
   background-color: #fafafa;
 }
 
+// Estilos para el backdrop del diálogo con efecto blur
+.cdk-overlay-backdrop.backdrop-blur {
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  opacity: 1 !important;
+}
+
 // Estilos de las tarjetas del clima
 .weather-card {
   margin: 16px;
