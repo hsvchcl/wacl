@@ -1,10 +1,16 @@
 <div class="modern-greeting" *ngIf="userName && greeting" [@fadeIn]>
   <div class="greeting-content">
-    <span class="greeting-time">{{ greeting }}</span>
-    <h1 class="greeting-name">{{ userName }}</h1>
-    <p class="greeting-subtitle">
-      <span class="weather-icon">🌤️</span>
-      <span>Este es el clima para tu ubicación actual</span>
-    </p>
+    <div class="greeting-left">
+      <span class="greeting-time">{{ greeting }}</span>
+      <h1 class="greeting-name">{{ userName }}</h1>
+      <p class="greeting-subtitle">
+        <span class="weather-icon">🌤️</span>
+        <span>Este es el clima para tu ubicación actual</span>
+      </p>
+    </div>
+    <div class="greeting-date">
+      <span class="date-icon">📅</span>
+      <span class="date-text">{{ currentDate }}</span>
+    </div>
   </div>
 </div>

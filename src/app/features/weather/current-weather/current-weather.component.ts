@@ -11,6 +11,7 @@ import { WindInfoComponent } from '../../../shared/components/wind-info/wind-inf
 import { UvIndicatorComponent } from '../../../shared/components/uv-indicator/uv-indicator.component';
 import { MoonPhaseComponent } from '../../../shared/components/moon-phase/moon-phase.component';
 import { PressureInfoComponent } from '../../../shared/components/pressure-info/pressure-info.component';
+import { SunriseSunsetComponent } from '../../../shared/components/sunrise-sunset/sunrise-sunset.component';
 import { WeatherService } from '../../../shared/services/weather.service';
 import { UserGreetingComponent } from '../../../shared/components/user-greeting/user-greeting.component';
 
@@ -29,6 +30,7 @@ import { UserGreetingComponent } from '../../../shared/components/user-greeting/
     UvIndicatorComponent,
     MoonPhaseComponent,
     PressureInfoComponent,
+    SunriseSunsetComponent,
     UserGreetingComponent,
   ],
 })
@@ -51,6 +53,10 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
   // Propiedades para la presión atmosférica
   atmosphericPressure = 0;
   pressureTrend = 'stable';
+  
+  // Propiedades para la salida y puesta del sol
+  sunrise = 0;
+  sunset = 0;
 
   isMobile = false;
   private destroy$ = new Subject<void>();
@@ -92,6 +98,12 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
           this.beaufortScale = this.calculateBeaufortScale(
             weatherData.wind.speed
           );
+          
+          // Actualizar datos de amanecer y atardecer
+          if (weatherData.sys && weatherData.sys.sunrise && weatherData.sys.sunset) {
+            this.sunrise = weatherData.sys.sunrise;
+            this.sunset = weatherData.sys.sunset;
+          }
         }
       });
   }

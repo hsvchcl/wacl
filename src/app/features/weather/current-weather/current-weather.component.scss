@@ -95,6 +95,18 @@
   }
 }
 
+.sun-info {
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+  
+  app-sunrise-sunset {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+}
+
 .uv-info,
 .moon-info {
   grid-column: span 1;

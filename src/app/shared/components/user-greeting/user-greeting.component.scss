@@ -16,8 +16,14 @@
   position: relative;
   padding: 0;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   width: 100%;
+}
+
+.greeting-left {
+  display: flex;
+  flex-direction: column;
 }
 
 .greeting-time {
@@ -68,4 +74,54 @@
 .weather-icon {
   font-size: 1.4rem;
   color: #fbbf24;
+}
+
+/* Estilos para la sección de fecha */
+.greeting-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0.5rem 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+.date-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.date-text {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  text-align: right;
+  background: linear-gradient(120deg, #60a5fa, #c084fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .greeting-content {
+    flex-direction: column;
+  }
+  
+  .greeting-date {
+    margin-top: 1rem;
+    align-items: flex-start;
+    align-self: flex-start;
+  }
+  
+  .date-text {
+    text-align: left;
+  }
 }

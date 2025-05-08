@@ -30,7 +30,7 @@
       <app-forecast></app-forecast>
     </div>
     
-    <!-- Tercera fila: Clima actual e información del viento -->
+    <!-- Tercera fila: Clima actual, información del viento y ciclo solar -->
     <div class="bento-item main-weather">
       <app-weather-card
         [currentDate]="currentDate"
@@ -50,6 +50,13 @@
         [beaufortScale]="beaufortScale"
       >
       </app-wind-info>
+    </div>
+    <div class="bento-item sun-info">
+      <app-sunrise-sunset
+        [currentDate]="currentDate"
+        [sunrise]="sunrise"
+        [sunset]="sunset"
+      ></app-sunrise-sunset>
     </div>
   </div>
 </div>

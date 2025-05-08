@@ -1,0 +1,38 @@
+<div class="sunrise-sunset-card full-size">
+  <h3>Ciclo Solar</h3>
+  
+  <div class="sun-info-container">
+    <div class="sun-cycle">
+      <div class="sun-icon sunrise">
+        <i class="fas fa-sun"></i>
+        <div class="arrow-up"></div>
+      </div>
+      <div class="sun-time">
+        <span class="time">{{ sunriseTime }}</span>
+        <span class="label">Amanecer</span>
+      </div>
+    </div>
+
+    <div class="day-duration">
+      <span class="duration-value">{{ dayDuration }}</span>
+      <span class="duration-label">Duración del día</span>
+    </div>
+
+    <div class="sun-cycle">
+      <div class="sun-icon sunset">
+        <i class="fas fa-sun"></i>
+        <div class="arrow-down"></div>
+      </div>
+      <div class="sun-time">
+        <span class="time">{{ sunsetTime }}</span>
+        <span class="label">Atardecer</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sun-progress">
+    <div class="progress-bar">
+      <div class="progress-indicator"></div>
+    </div>
+  </div>
+</div>

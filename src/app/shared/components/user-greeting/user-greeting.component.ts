@@ -22,8 +22,11 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class UserGreetingComponent implements OnInit {
   userName: string = '';
   greeting: string = '';
+  currentDate: string = '';
 
-  constructor(private userPreferences: UserPreferencesService) {}
+  constructor(private userPreferences: UserPreferencesService) {
+    this.updateCurrentDate();
+  }
 
   ngOnInit(): void {
     this.userPreferences.userInfo$.subscribe(userInfo => {
@@ -32,6 +35,18 @@ export class UserGreetingComponent implements OnInit {
         this.updateGreeting();
       }
     });
+  }
+
+  private updateCurrentDate(): void {
+    const options: Intl.DateTimeFormatOptions = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    };
+    this.currentDate = new Date().toLocaleDateString('es-ES', options);
+    // Capitalizar primera letra
+    this.currentDate = this.currentDate.charAt(0).toUpperCase() + this.currentDate.slice(1);
   }
 
   private updateGreeting(): void {
