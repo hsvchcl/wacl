@@ -26,11 +26,12 @@ p {
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
   background-color: rgba(0, 0, 0, 0.4) !important;
-  transition: all 0.3s ease !important;
+  transition: all 0.4s ease !important;
+  opacity: 0;
+  animation: fadeInBackdrop 0.5s forwards;
 }
 
 ::ng-deep .modern-dialog {
-  animation: fadeInUp 0.3s ease-out;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -39,13 +40,48 @@ p {
   border-radius: 12px;
 }
 
-@keyframes fadeInUp {
+::ng-deep .fade-dialog .mat-mdc-dialog-container {
+  transition: all 0.3s ease-out !important;
+}
+
+@keyframes fadeInBackdrop {
   from {
     opacity: 0;
-    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutBackdrop {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
   }
 }

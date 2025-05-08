@@ -1,4 +1,4 @@
-<div class="welcome-dialog">
+<div class="welcome-dialog" [@dialogFade] (@dialogFade.done)="onAnimationDone($event)">
   <h2 mat-dialog-title>¡Bienvenido a Weather App!</h2>
   <mat-dialog-content>
     <p>Para personalizar tu experiencia, por favor ingresa tus datos:</p>

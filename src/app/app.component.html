@@ -1,5 +1,5 @@
 <div class="app-container">
-  <app-welcome></app-welcome>
+  <app-welcome [isLoading]="isLoading"></app-welcome>
   @if (isLoading) {
     <div class="loading-overlay">
       <div class="loading-content">
