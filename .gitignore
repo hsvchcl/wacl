@@ -41,4 +41,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/src/environments
+# Environment files - Ignore specific environment files but not templates
+/src/environments/environment.ts
+/src/environments/environment.prod.ts
+# Keep environment templates
+!/src/environments/environment.template.ts
+!/src/environments/environment.prod.template.ts
