@@ -3,38 +3,58 @@
     <div class="bento-brand">
       <span class="app-title">Weather App</span>
     </div>
-    
+
     <!-- Botones para pantalla grande -->
     <div class="desktop-menu">
       <div class="bento-nav-items">
+        <button
+          mat-button
+          class="bento-button"
+          *ngIf="hasHomeLocation && homeCity !== currentCity"
+          (click)="goToHomeLocation()"
+        >
+          <mat-icon>home</mat-icon>
+          <span>Mi Ubicación ({{ homeCity }})</span>
+        </button>
         <button mat-button class="bento-button" (click)="openCitiesModal()">
           <mat-icon>wb_sunny</mat-icon>
-          <span>Clima Actual en {{currentCity ? currentCity : 'cargando...'}}</span>
-        </button>
-        
-        <button mat-button class="bento-button" *ngIf="hasHomeLocation && homeCity !== currentCity" (click)="goToHomeLocation()">
-          <mat-icon>home</mat-icon>
-          <span>Mi Ubicación ({{homeCity}})</span>
+          <span
+            >Clima Actual en
+            {{ currentCity ? currentCity : "cargando..." }}</span
+          >
         </button>
       </div>
     </div>
 
     <!-- Botón de menú móvil -->
-    <button mat-icon-button class="mobile-menu-button bento-menu-button" (click)="toggleMenu()">
-      <mat-icon>{{isMenuOpen ? 'close' : 'menu'}}</mat-icon>
+    <button
+      mat-icon-button
+      class="mobile-menu-button bento-menu-button"
+      (click)="toggleMenu()"
+    >
+      <mat-icon>{{ isMenuOpen ? "close" : "menu" }}</mat-icon>
     </button>
   </div>
 </mat-toolbar>
 
 <!-- Menú móvil desplegable -->
 <div class="mobile-menu bento-mobile-menu" [class.show]="isMenuOpen">
-  <button mat-button class="bento-mobile-button" (click)="openCitiesModal(); toggleMenu()">
+  <button
+    mat-button
+    class="bento-mobile-button"
+    (click)="openCitiesModal(); toggleMenu()"
+  >
     <mat-icon>wb_sunny</mat-icon>
-    <span>Clima Actual en {{currentCity ? currentCity : 'cargando...'}}</span>
+    <span>Clima Actual en {{ currentCity ? currentCity : "cargando..." }}</span>
   </button>
-  
-  <button mat-button class="bento-mobile-button" *ngIf="hasHomeLocation && homeCity !== currentCity" (click)="goToHomeLocation(); toggleMenu()">
+
+  <button
+    mat-button
+    class="bento-mobile-button"
+    *ngIf="hasHomeLocation && homeCity !== currentCity"
+    (click)="goToHomeLocation(); toggleMenu()"
+  >
     <mat-icon>home</mat-icon>
-    <span>Mi Ubicación ({{homeCity}})</span>
+    <span>Mi Ubicación ({{ homeCity }})</span>
   </button>
 </div>
