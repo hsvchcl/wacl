@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,18 +8,69 @@ import { CommonModule } from '@angular/common';
   templateUrl: './sunrise-sunset.component.html',
   styleUrl: './sunrise-sunset.component.scss'
 })
-export class SunriseSunsetComponent implements OnChanges {
+export class SunriseSunsetComponent implements OnChanges, OnInit {
   @Input() currentDate: Date = new Date();
   @Input() sunrise: number = 0;
   @Input() sunset: number = 0;
+  @Input() loading: boolean = true;
 
   sunriseTime: string = '';
   sunsetTime: string = '';
   dayDuration: string = '';
+  sunProgressPercentage: number = 0;
+  isNight: boolean = false;
+  
+  private updateInterval: any;
+
+  ngOnInit(): void {
+    this.updateSunPosition();
+    // Actualizar la posición cada minuto
+    this.updateInterval = setInterval(() => {
+      this.updateSunPosition();
+    }, 60000);
+  }
+  
+  ngOnDestroy(): void {
+    if (this.updateInterval) {
+      clearInterval(this.updateInterval);
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['sunrise'] || changes['sunset']) {
+    if (changes['sunrise'] || changes['sunset'] || changes['currentDate']) {
       this.formatTimes();
+      this.updateSunPosition();
+      
+      // Si tenemos datos de sunrise y sunset, consideramos que los datos están cargados
+      if (this.sunrise && this.sunset) {
+        setTimeout(() => {
+          this.loading = false;
+        }, 500); // Pequeño delay para dar tiempo a que se vea el skeleton
+      }
+    }
+  }
+
+  private updateSunPosition(): void {
+    const now = Math.floor(new Date().getTime() / 1000); // Tiempo actual en segundos
+    
+    // Comprueba si es de noche (antes del amanecer o después del atardecer)
+    if (this.sunrise && this.sunset) {
+      if (now < this.sunrise) {
+        // Antes del amanecer
+        this.isNight = true;
+        this.sunProgressPercentage = 0;
+      } else if (now > this.sunset) {
+        // Después del atardecer
+        this.isNight = true;
+        this.sunProgressPercentage = 100;
+      } else {
+        // Durante el día
+        this.isNight = false;
+        // Calcular el porcentaje del día que ha pasado
+        const totalDayTime = this.sunset - this.sunrise;
+        const elapsedTime = now - this.sunrise;
+        this.sunProgressPercentage = Math.min(100, Math.max(0, (elapsedTime / totalDayTime) * 100));
+      }
     }
   }
 

@@ -73,6 +73,7 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
   // Propiedad para el pronóstico
   weeklyForecast: ForecastData[] = [];
   isLoadingForecast = true;
+  isLoadingWeather = true;
 
   isMobile = false;
   private destroy$ = new Subject<void>();
@@ -109,36 +110,45 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
     this.weatherSubscription = this.weatherService
       .getCurrentLocationWeather()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((weatherData) => {
-        console.log('Weather data:', weatherData);
+      .subscribe({
+        next: (weatherData) => {
+          console.log('Weather data:', weatherData);
 
-        if (weatherData) {
-          // Actualizar la temperatura y condiciones climáticas
-          this.temperature = Math.round(weatherData.main.temp);
-          this.weatherCondition = weatherData.weather[0].description;
-          this.humidity = weatherData.main.humidity;
+          if (weatherData) {
+            // Actualizar la temperatura y condiciones climáticas
+            this.temperature = Math.round(weatherData.main.temp);
+            this.weatherCondition = weatherData.weather[0].description;
+            this.humidity = weatherData.main.humidity;
 
-          // Actualizar información del viento
-          this.windSpeed = Math.round(weatherData.wind.speed * 3.6); // Convertir m/s a km/h
-          this.windDirection = this.getWindDirection(weatherData.wind.deg);
+            // Actualizar información del viento
+            this.windSpeed = Math.round(weatherData.wind.speed * 3.6); // Convertir m/s a km/h
+            this.windDirection = this.getWindDirection(weatherData.wind.deg);
 
-          // Actualizar presión atmosférica
-          this.atmosphericPressure = weatherData.main.pressure;
+            // Actualizar presión atmosférica
+            this.atmosphericPressure = weatherData.main.pressure;
 
-          // Calcular escala Beaufort
-          this.beaufortScale = this.calculateBeaufortScale(
-            weatherData.wind.speed
-          );
+            // Calcular escala Beaufort
+            this.beaufortScale = this.calculateBeaufortScale(
+              weatherData.wind.speed
+            );
 
-          // Actualizar datos de amanecer y atardecer
-          if (
-            weatherData.sys &&
-            weatherData.sys.sunrise &&
-            weatherData.sys.sunset
-          ) {
-            this.sunrise = weatherData.sys.sunrise;
-            this.sunset = weatherData.sys.sunset;
+            // Actualizar datos de amanecer y atardecer
+            if (
+              weatherData.sys &&
+              weatherData.sys.sunrise &&
+              weatherData.sys.sunset
+            ) {
+              this.sunrise = weatherData.sys.sunrise;
+              this.sunset = weatherData.sys.sunset;
+            }
+            
+            // Marcar como cargado
+            this.isLoadingWeather = false;
           }
+        },
+        error: (error) => {
+          console.error('Error al obtener datos del clima:', error);
+          this.isLoadingWeather = false; // También marcar como cargado en caso de error
         }
       });
   }

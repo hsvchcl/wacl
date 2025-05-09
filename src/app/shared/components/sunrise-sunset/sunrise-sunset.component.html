@@ -1,7 +1,32 @@
-<div class="sunrise-sunset-card full-size">
+<div class="sunrise-sunset-card full-size" [ngClass]="{'night-mode': isNight}">
   <h3>Ciclo Solar</h3>
   
-  <div class="sun-info-container">
+  <!-- Skeleton loading -->
+  <div class="sun-info-container skeleton-container" *ngIf="loading">
+    <div class="sun-cycle">
+      <div class="sun-icon-skeleton skeleton-item"></div>
+      <div class="sun-time-skeleton">
+        <div class="time-skeleton skeleton-item"></div>
+        <div class="label-skeleton skeleton-item"></div>
+      </div>
+    </div>
+
+    <div class="day-duration-skeleton">
+      <div class="duration-value-skeleton skeleton-item"></div>
+      <div class="duration-label-skeleton skeleton-item"></div>
+    </div>
+
+    <div class="sun-cycle">
+      <div class="sun-icon-skeleton skeleton-item"></div>
+      <div class="sun-time-skeleton">
+        <div class="time-skeleton skeleton-item"></div>
+        <div class="label-skeleton skeleton-item"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content when loaded -->
+  <div class="sun-info-container" *ngIf="!loading">
     <div class="sun-cycle">
       <div class="sun-icon sunrise">
         <i class="fas fa-sun"></i>
@@ -30,9 +55,9 @@
     </div>
   </div>
 
-  <div class="sun-progress">
+  <!-- <div class="sun-progress">
     <div class="progress-bar">
-      <div class="progress-indicator"></div>
+      <div class="progress-indicator" [style.left]="sunProgressPercentage + '%'"></div>
     </div>
-  </div>
+  </div> -->
 </div>
