@@ -13,6 +13,7 @@ import { MoonPhaseComponent } from '../../../shared/components/moon-phase/moon-p
 import { PressureInfoComponent } from '../../../shared/components/pressure-info/pressure-info.component';
 import { SunriseSunsetComponent } from '../../../shared/components/sunrise-sunset/sunrise-sunset.component';
 import { WeatherService } from '../../../shared/services/weather.service';
+import { ForecastService, ForecastData as ApiForcastData } from '../../../shared/services/forecast.service';
 import { UserGreetingComponent } from '../../../shared/components/user-greeting/user-greeting.component';
 
 // Agregar la interface ForecastData
@@ -69,17 +70,20 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
   sunrise = 0;
   sunset = 0;
 
-  // Propiedad para el pronóstico (vacía ya que no lo cargamos más)
+  // Propiedad para el pronóstico
   weeklyForecast: ForecastData[] = [];
-  isLoadingForecast = false;
+  isLoadingForecast = true;
 
   isMobile = false;
   private destroy$ = new Subject<void>();
   private weatherSubscription?: Subscription;
+  private locationSubscription?: Subscription;
+  private forecastSubscription?: Subscription;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private weatherService: WeatherService
+    private weatherService: WeatherService,
+    private forecastService: ForecastService
   ) {}
 
   ngOnInit(): void {
@@ -89,6 +93,16 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((result) => {
         this.isMobile = result.matches;
+      });
+
+    // Suscribirse a la ubicación actual para obtener las coordenadas
+    this.locationSubscription = this.weatherService.currentLocation$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(location => {
+        if (location && location.lat && location.lon) {
+          // Cargar el pronóstico cuando tengamos las coordenadas
+          this.loadForecast(location.lat, location.lon);
+        }
       });
 
     // Suscribirse al clima actual
@@ -127,8 +141,58 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
           }
         }
       });
+  }
 
-    // Ya no necesitamos cargar el pronóstico
+  loadForecast(lat: number, lon: number): void {
+    this.isLoadingForecast = true;
+    
+    this.forecastSubscription = this.forecastService
+      .getForecastByCoords(lat, lon)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (forecastData) => {
+          console.log('Forecast data:', forecastData);
+          this.processForecastData(forecastData);
+          this.isLoadingForecast = false;
+        },
+        error: (error) => {
+          console.error('Error al obtener el pronóstico:', error);
+          this.isLoadingForecast = false;
+        }
+      });
+  }
+
+  processForecastData(apiData: ApiForcastData): void {
+    // Procesar y agrupar datos por día (una entrada por día)
+    const dailyData = new Map<string, ForecastData>();
+    
+    apiData.list.forEach(item => {
+      const date = new Date(item.dt * 1000);
+      const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
+      
+      // Crear o actualizar entrada para este día
+      if (!dailyData.has(dateStr)) {
+        dailyData.set(dateStr, {
+          date: date,
+          temperature: Math.round(item.main.temp),
+          icon: item.weather[0].icon,
+          description: item.weather[0].description,
+          condition: item.weather[0].main,
+          maxTemp: Math.round(item.main.temp_max),
+          minTemp: Math.round(item.main.temp_min)
+        });
+      } else {
+        const existing = dailyData.get(dateStr)!;
+        // Actualizar máximas y mínimas si son más extremas
+        existing.maxTemp = Math.max(existing.maxTemp, Math.round(item.main.temp_max));
+        existing.minTemp = Math.min(existing.minTemp, Math.round(item.main.temp_min));
+      }
+    });
+    
+    // Convertir el Map a un array y ordenar por fecha
+    this.weeklyForecast = Array.from(dailyData.values())
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .slice(0, 7); // Limitar a 7 días
   }
 
   ngOnDestroy(): void {
@@ -137,7 +201,12 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
     if (this.weatherSubscription) {
       this.weatherSubscription.unsubscribe();
     }
-    // Se eliminó la referencia al forecastSubscription
+    if (this.locationSubscription) {
+      this.locationSubscription.unsubscribe();
+    }
+    if (this.forecastSubscription) {
+      this.forecastSubscription.unsubscribe();
+    }
   }
 
   private getWindDirection(degrees: number): string {
@@ -164,8 +233,6 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
     const index = Math.round(degrees / 22.5) % 16;
     return directions[index];
   }
-
-  // Métodos relacionados con forecast fueron eliminados
 
   private calculateBeaufortScale(windSpeed: number): number {
     // Velocidad del viento en m/s

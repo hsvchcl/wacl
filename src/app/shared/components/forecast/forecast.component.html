@@ -2,14 +2,13 @@
   <mat-card class="forecast-card">
     <div class="card-content">
       <div class="forecast-header">
-        <h2 class="title">Pronóstico 5 Días</h2>
+        <h2 class="title">Pronóstico de 5 días</h2>
       </div>
       
       <div class="forecast-list" *ngIf="!isLoading; else loadingTemplate">
         <div class="forecast-item" *ngFor="let forecast of weeklyForecast">
-          <div class="day">{{ forecast.date | date:'EEE' | uppercase }}</div>
+          <div class="day">{{ forecast.date | date:'EEEE' | titlecase }}</div>
           <div class="icon-container">
-            <!-- Usar iconos de OpenWeatherMap -->
             <img 
               [src]="'https://openweathermap.org/img/wn/' + forecast.icon + '@2x.png'" 
               [alt]="forecast.condition" 
@@ -30,6 +29,14 @@
 
 <ng-template #loadingTemplate>
   <div class="loading-container">
-    <p>Cargando pronóstico...</p>
+    <div class="skeleton-list">
+      <div class="skeleton-item" *ngFor="let item of [1, 2, 3, 4, 5]">
+        <div class="skeleton-day"></div>
+        <div class="skeleton-icon"></div>
+        <div class="skeleton-temp-range"></div>
+        <div class="skeleton-temp"></div>
+        <div class="skeleton-condition"></div>
+      </div>
+    </div>
   </div>
 </ng-template>
