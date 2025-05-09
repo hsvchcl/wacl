@@ -8,12 +8,16 @@
       <div class="forecast-list">
         <div class="forecast-item" *ngFor="let forecast of weeklyForecast">
           <div class="day">{{ forecast.date | date:'EEE' }}</div>
-          <mat-icon class="weather-icon">
-            {{ forecast.condition === 'Soleado' ? 'wb_sunny' : 
-               forecast.condition === 'Lluvioso' ? 'rainy' : 
-               forecast.condition === 'Parcialmente nublado' ? 'partly_cloudy_day' : 
-               'cloud' }}
-          </mat-icon>
+          <div class="icon-container">
+            <mat-icon class="weather-icon">
+              {{ forecast.condition === 'Soleado' ? 'wb_sunny' : 
+                 forecast.condition === 'Despejado' ? 'wb_sunny' :
+                 forecast.condition === 'Lluvioso' ? 'rainy' : 
+                 forecast.condition === 'Parcialmente nublado' ? 'partly_cloudy_day' : 
+                 forecast.condition === 'Nublado' ? 'cloud' :
+                 'cloud' }}
+            </mat-icon>
+          </div>
           <div class="temp">{{ forecast.temperature }}°C</div>
           <div class="condition">{{ forecast.condition }}</div>
         </div>
