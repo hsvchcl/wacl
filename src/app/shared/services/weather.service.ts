@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, switchMap, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { UserPreferencesService } from './user-preferences.service';
 
 interface GeoLocation {
   city: string;
@@ -48,7 +49,10 @@ export class WeatherService {
   private currentWeatherSubject = new BehaviorSubject<WeatherData | null>(null);
   public currentWeather$ = this.currentWeatherSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private userPreferencesService: UserPreferencesService
+  ) {
     // Solo inicializamos la obtención de la ubicación del usuario
     // Los métodos getWeatherByCoords y getWeatherByCity actualizan directamente los subjects
     // por lo que no necesitamos suscribirnos adicionalmente a los cambios de location
@@ -68,7 +72,17 @@ export class WeatherService {
             lon,
           };
           this.currentLocationSubject.next(location);
-          this.getLocationNameByCoords(lat, lon);
+          this.getLocationNameByCoords(lat, lon).then(fullLocation => {
+            // Guardar como ubicación del hogar si no existe una previamente
+            if (!this.userPreferencesService.hasHomeLocation()) {
+              this.userPreferencesService.saveHomeLocation({
+                city: fullLocation.city,
+                country: fullLocation.country,
+                lat: lat,
+                lon: lon
+              });
+            }
+          });
         },
         (error) => {
           console.error('Error getting location:', error);
@@ -94,7 +108,7 @@ export class WeatherService {
     }
   }
 
-  private getLocationNameByCoords(lat: number, lon: number): void {
+  private getLocationNameByCoords(lat: number, lon: number): Promise<GeoLocation> {
     const params = {
       lat: lat.toString(),
       lon: lon.toString(),
@@ -103,28 +117,32 @@ export class WeatherService {
       lang: 'es',
     };
 
-    // Hacemos una sola llamada directamente al endpoint, evitando llamadas circulares
-    this.http.get<WeatherData>(`${environment.openWeatherApiUrl}`, { params })
-      .subscribe({
-        next: (weatherData) => {
-          console.log('Ubicación obtenida correctamente');
-          
-          // Actualizar los datos del clima y la ubicación
-          this.currentWeatherSubject.next(weatherData);
-          
-          // Actualizar la ubicación
-          const location: GeoLocation = {
-            city: weatherData.name,
-            country: weatherData.sys.country,
-            lat: lat,
-            lon: lon,
-          };
-          this.currentLocationSubject.next(location);
-        },
-        error: (error) => {
-          console.error('Error getting location name:', error);
-        },
-      });
+    return new Promise((resolve, reject) => {
+      this.http.get<WeatherData>(`${environment.openWeatherApiUrl}`, { params })
+        .subscribe({
+          next: (weatherData) => {
+            console.log('Ubicación obtenida correctamente');
+            
+            // Actualizar los datos del clima y la ubicación
+            this.currentWeatherSubject.next(weatherData);
+            
+            // Actualizar la ubicación
+            const location: GeoLocation = {
+              city: weatherData.name,
+              country: weatherData.sys.country,
+              lat: lat,
+              lon: lon,
+            };
+            this.currentLocationSubject.next(location);
+
+            resolve(location);
+          },
+          error: (error) => {
+            console.error('Error getting location name:', error);
+            reject(error);
+          }
+        });
+    });
   }
 
   /**

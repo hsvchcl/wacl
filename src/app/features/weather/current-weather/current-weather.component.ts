@@ -217,7 +217,7 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
     // Convertir el Map a un array y ordenar por fecha
     this.weeklyForecast = Array.from(dailyData.values())
       .sort((a, b) => a.date.getTime() - b.date.getTime())
-      .slice(0, 7); // Limitar a 7 días
+      .slice(0, 5); // Limitar a 7 días
   }
 
   ngOnDestroy(): void {

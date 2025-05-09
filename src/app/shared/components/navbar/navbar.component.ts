@@ -7,6 +7,7 @@ import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { WeatherService } from '../../services/weather.service';
 import { ForecastService } from '../../services/forecast.service';
 import { FavoriteCitiesService } from '../../services/favorite-cities.service';
+import { UserPreferencesService } from '../../services/user-preferences.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,12 +31,16 @@ import { MainCitiesComponent } from '../../../features/weather/main-cities/main-
 export class NavbarComponent implements OnInit, OnDestroy {
   isMenuOpen = false;
   currentCity: string = '';
+  homeCity: string = '';
+  hasHomeLocation: boolean = false;
   private locationSubscription?: Subscription;
+  private homeLocationSubscription?: Subscription;
 
   constructor(
     private weatherService: WeatherService,
     private forecastService: ForecastService,
     private favoriteCitiesService: FavoriteCitiesService,
+    private userPreferencesService: UserPreferencesService,
     private dialog: MatDialog
   ) {}
 
@@ -48,16 +53,81 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
       }
     );
+    
+    // Suscripción a la ubicación del hogar
+    this.homeLocationSubscription = this.userPreferencesService.homeLocation$.subscribe(
+      (homeLocation) => {
+        if (homeLocation) {
+          console.log('Home location:', homeLocation);
+          this.homeCity = homeLocation.city;
+          this.hasHomeLocation = true;
+        } else {
+          this.hasHomeLocation = false;
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
     if (this.locationSubscription) {
       this.locationSubscription.unsubscribe();
     }
+    if (this.homeLocationSubscription) {
+      this.homeLocationSubscription.unsubscribe();
+    }
   }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+  
+  goToHomeLocation() {
+    const homeLocation = this.userPreferencesService.getHomeLocation();
+    if (homeLocation) {
+      if (homeLocation.lat && homeLocation.lon) {
+        // Si tenemos coordenadas, usamos esas para mayor precisión
+        this.weatherService.getWeatherByCoords(homeLocation.lat, homeLocation.lon).subscribe({
+          next: (weatherData) => {
+            console.log(`Clima actualizado para ubicación de casa`, weatherData);
+            
+            // Actualizamos también el pronóstico para la ciudad seleccionada
+            if (homeLocation.lat && homeLocation.lon) {
+              this.forecastService.getForecastByCoords(homeLocation.lat, homeLocation.lon).subscribe({
+                next: (forecastData) => {
+                  console.log(`Pronóstico actualizado para ubicación de casa`, forecastData);
+                },
+                error: (error) => {
+                  console.error(`Error al obtener el pronóstico para ubicación de casa:`, error);
+                }
+              });
+            }
+          },
+          error: (error) => {
+            console.error(`Error al obtener el clima para ubicación de casa:`, error);
+          }
+        });
+      } else {
+        // Si solo tenemos el nombre de la ciudad
+        this.weatherService.getWeatherByCity(homeLocation.city).subscribe({
+          next: (weatherData) => {
+            console.log(`Clima actualizado para ${homeLocation.city}`, weatherData);
+            
+            // Actualizamos también el pronóstico para la ciudad seleccionada
+            this.forecastService.getForecastByCity(homeLocation.city).subscribe({
+              next: (forecastData) => {
+                console.log(`Pronóstico actualizado para ${homeLocation.city}`, forecastData);
+              },
+              error: (error) => {
+                console.error(`Error al obtener el pronóstico para ${homeLocation.city}:`, error);
+              }
+            });
+          },
+          error: (error) => {
+            console.error(`Error al obtener el clima para ${homeLocation.city}:`, error);
+          }
+        });
+      }
+    }
   }
 
   openCitiesModal() {
