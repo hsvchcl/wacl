@@ -6,8 +6,8 @@
       </div>
       
       <div class="forecast-list" *ngIf="!isLoading; else loadingTemplate">
-        <div class="forecast-item" *ngFor="let forecast of weeklyForecast">
-          <div class="day">{{ forecast.date | date:'EEEE' | titlecase }}</div>
+        <div class="forecast-item" *ngFor="let forecast of weeklyForecast; let i = index">
+          <div class="day">{{ i === 0 ? 'Hoy' : (forecast.date | date:'EEE d MMM' | titlecase) }}</div>
           <div class="icon-container">
             <img 
               [src]="'https://openweathermap.org/img/wn/' + forecast.icon + '@2x.png'" 
@@ -30,7 +30,7 @@
 <ng-template #loadingTemplate>
   <div class="loading-container">
     <div class="skeleton-list">
-      <div class="skeleton-item" *ngFor="let item of [1, 2, 3, 4, 5]">
+      <div class="skeleton-item" *ngFor="let item of [1, 2, 3, 4, 5, 6]">
         <div class="skeleton-day"></div>
         <div class="skeleton-icon"></div>
         <div class="skeleton-temp-range"></div>

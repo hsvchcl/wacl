@@ -190,13 +190,25 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
   processForecastData(apiData: ApiForcastData): void {
     // Procesar y agrupar datos por día (una entrada por día)
     const dailyData = new Map<string, ForecastData>();
+    const today = new Date();
+    const uniqueDays = new Set<string>();
     
-    apiData.list.forEach(item => {
+    // Primero aseguremos que los pronósticos están ordenados por fecha
+    const sortedForecasts = [...apiData.list].sort((a, b) => a.dt - b.dt);
+    
+    sortedForecasts.forEach(item => {
       const date = new Date(item.dt * 1000);
-      const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
       
-      // Crear o actualizar entrada para este día
-      if (!dailyData.has(dateStr)) {
+      // Usamos día y mes como clave para asegurar unicidad por día del calendario
+      const dayKey = `${date.getDate()}-${date.getMonth()}`;
+      
+      // Si ya procesamos este día del calendario, lo saltamos
+      if (!uniqueDays.has(dayKey)) {
+        uniqueDays.add(dayKey);
+        
+        // Formato de fecha para mostrar
+        const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
+        
         dailyData.set(dateStr, {
           date: date,
           temperature: Math.round(item.main.temp),
@@ -206,18 +218,13 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
           maxTemp: Math.round(item.main.temp_max),
           minTemp: Math.round(item.main.temp_min)
         });
-      } else {
-        const existing = dailyData.get(dateStr)!;
-        // Actualizar máximas y mínimas si son más extremas
-        existing.maxTemp = Math.max(existing.maxTemp, Math.round(item.main.temp_max));
-        existing.minTemp = Math.min(existing.minTemp, Math.round(item.main.temp_min));
       }
     });
     
     // Convertir el Map a un array y ordenar por fecha
     this.weeklyForecast = Array.from(dailyData.values())
       .sort((a, b) => a.date.getTime() - b.date.getTime())
-      .slice(0, 5); // Limitar a 7 días
+      .slice(0, 6); // Limitar a 6 días como indica el título del componente
   }
 
   ngOnDestroy(): void {

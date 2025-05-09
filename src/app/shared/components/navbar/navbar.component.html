@@ -42,19 +42,18 @@
   <button
     mat-button
     class="bento-mobile-button"
-    (click)="openCitiesModal(); toggleMenu()"
-  >
-    <mat-icon>wb_sunny</mat-icon>
-    <span>Clima Actual en {{ currentCity ? currentCity : "cargando..." }}</span>
-  </button>
-
-  <button
-    mat-button
-    class="bento-mobile-button"
     *ngIf="hasHomeLocation && homeCity !== currentCity"
     (click)="goToHomeLocation(); toggleMenu()"
   >
     <mat-icon>home</mat-icon>
     <span>Mi Ubicación ({{ homeCity }})</span>
+  </button>
+  <button
+    mat-button
+    class="bento-mobile-button"
+    (click)="openCitiesModal(); toggleMenu()"
+  >
+    <mat-icon>wb_sunny</mat-icon>
+    <span>Clima Actual en {{ currentCity ? currentCity : "cargando..." }}</span>
   </button>
 </div>
