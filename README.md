@@ -1,59 +1,167 @@
-# PruebaTecnicaTinetAngular
+# Aplicación del Clima - Prueba Técnica Tinet
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.11.
+![Versión de Angular](https://img.shields.io/badge/angular-19.2.11-red)
+![Material UI](https://img.shields.io/badge/angular%20material-19.2.15-blue)
 
-## Development server
+Una aplicación web desarrollada en Angular que permite consultar información meteorológica en tiempo real, utilizando la API de OpenWeatherMap y servicios de geolocalización.
 
-To start a local development server, run:
+## 📋 Características
+
+- **Detección automática de ubicación** del usuario
+- **Información meteorológica actual** con detalles como:
+  - Temperatura actual y sensación térmica
+  - Presión atmosférica
+  - Humedad
+  - Velocidad y dirección del viento
+- **Pronóstico extendido** para los próximos días
+- **Fases lunares** 
+- **Información de amanecer y atardecer**
+- **Indicador de índice UV**
+- **Ciudades favoritas** que pueden ser guardadas por el usuario
+- **Interfaz responsiva** adaptada a diferentes dispositivos
+- **Traducciones de condiciones meteorológicas** al español
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Angular 19.2.11** - Framework de desarrollo frontend
+- **Angular Material 19.2.15** - Componentes UI
+- **RxJS** - Programación reactiva
+- **OpenWeatherMap API** - Datos meteorológicos
+- **ipinfo.io** - Servicio de geolocalización
+- **Firebase Hosting** - Despliegue de la aplicación
+
+## 🚀 Instalación y Ejecución
+
+### Requisitos previos
+
+- Node.js (v16.x o superior)
+- npm (v7.x o superior) o yarn
+- Angular CLI v19.x
+
+### Pasos para la instalación
+
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/hsvchcl/PruebaTecnicaTinet/prueba-tecnica-tinet-angular.git
+   cd prueba-tecnica-tinet-angular
+   ```
+
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+
+3. Inicia el servidor de desarrollo:
+   ```bash
+   npm start
+   # o
+   ng serve
+   ```
+
+4. Abre tu navegador y visita:
+   ```
+   http://localhost:4200/
+   ```
+
+## 📦 Compilación para producción
+
+Para generar una versión optimizada para producción:
 
 ```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+npm run build
+# o
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Los archivos compilados se encontrarán en el directorio `dist/prueba-tecnica-tinet-angular/browser/`.
 
-## Running unit tests
+## 🔧 Configuración
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Las variables de entorno se encuentran en los archivos:
+- `src/environments/environment.ts` (desarrollo)
+- `src/environments/environment.prod.ts` (producción)
+
+Puedes modificar las API keys y URLs según tus necesidades:
+
+```typescript
+export const environment = {
+  production: false, // o true para environment.prod.ts
+  geoApiUrl: 'https://ipinfo.io/json',
+  geoApiKey: 'tu_api_key_aquí',
+  openWeatherApiUrl: 'https://api.openweathermap.org/data/2.5/weather',
+  openWeatherForecastUrl: 'https://api.openweathermap.org/data/2.5/forecast',
+  openWeatherApiKey: 'tu_api_key_aquí',
+};
+```
+
+## 🧪 Pruebas
+
+### Pruebas unitarias
+
+Para ejecutar las pruebas unitarias con Karma:
 
 ```bash
+npm test
+# o
 ng test
 ```
 
-## Running end-to-end tests
+### Pruebas end-to-end
 
-For end-to-end (e2e) testing, run:
+Para ejecutar pruebas e2e (requiere configuración previa):
 
 ```bash
+npm run e2e
+# o
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 📱 Despliegue
 
-## Additional Resources
+La aplicación está configurada para ser desplegada en Firebase Hosting:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```bash
+npm install -g firebase-tools
+firebase login
+firebase deploy
+```
+
+## 📚 Estructura del Proyecto
+
+```
+src/
+├── app/
+│   ├── features/           # Características principales
+│   │   └── weather/        # Módulos relacionados con el clima
+│   │       ├── current-weather/  # Clima actual
+│   │       └── main-cities/      # Ciudades principales
+│   ├── shared/             # Componentes y servicios compartidos
+│   │   ├── components/     # Componentes reutilizables
+│   │   ├── pipes/          # Pipes personalizados
+│   │   └── services/       # Servicios de la aplicación
+│   ├── app.component.*     # Componente raíz
+│   └── app.routes.ts       # Configuración de rutas
+└── environments/           # Variables de entorno
+```
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Para contribuir:
+
+1. Haz un fork del proyecto
+2. Crea una rama para tu característica (`git checkout -b feature/amazing-feature`)
+3. Realiza tus cambios y haz commits (`git commit -m 'Add some amazing feature'`)
+4. Push a la rama (`git push origin feature/amazing-feature`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE.md para más detalles.
+
+## 👨‍💻 Autor
+
+- Hans Vega - [hsvchcl](https://github.com/hsvchcl)
+
+---
+
+Desarrollado como parte de una prueba técnica para Tinet.

@@ -33,17 +33,12 @@ export class FavoriteCitiesComponent implements OnInit {
   }
 
   selectCity(cityName: string): void {
-    console.log(`Cambiando a ciudad favorita: ${cityName}`);
-    
     // Actualizamos el clima para la ciudad seleccionada
     this.weatherService.getWeatherByCity(cityName).subscribe({
       next: (weatherData) => {
-        console.log(`Clima actualizado para ${cityName}`, weatherData);
-        
         // Actualizamos también el pronóstico
         this.forecastService.getForecastByCity(cityName).subscribe({
           next: (forecastData) => {
-            console.log(`Pronóstico actualizado para ${cityName}`, forecastData);
           },
           error: (error) => {
             console.error(`Error al obtener el pronóstico para ${cityName}:`, error);

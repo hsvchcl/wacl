@@ -48,7 +48,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.locationSubscription = this.weatherService.currentLocation$.subscribe(
       (location) => {
         if (location) {
-          console.log('Current location:', location);
           this.currentCity = location.city;
         }
       }
@@ -58,7 +57,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.homeLocationSubscription = this.userPreferencesService.homeLocation$.subscribe(
       (homeLocation) => {
         if (homeLocation) {
-          console.log('Home location:', homeLocation);
           this.homeCity = homeLocation.city;
           this.hasHomeLocation = true;
         } else {
@@ -88,13 +86,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
         // Si tenemos coordenadas, usamos esas para mayor precisión
         this.weatherService.getWeatherByCoords(homeLocation.lat, homeLocation.lon).subscribe({
           next: (weatherData) => {
-            console.log(`Clima actualizado para ubicación de casa`, weatherData);
             
             // Actualizamos también el pronóstico para la ciudad seleccionada
             if (homeLocation.lat && homeLocation.lon) {
               this.forecastService.getForecastByCoords(homeLocation.lat, homeLocation.lon).subscribe({
                 next: (forecastData) => {
-                  console.log(`Pronóstico actualizado para ubicación de casa`, forecastData);
                 },
                 error: (error) => {
                   console.error(`Error al obtener el pronóstico para ubicación de casa:`, error);
@@ -110,12 +106,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         // Si solo tenemos el nombre de la ciudad
         this.weatherService.getWeatherByCity(homeLocation.city).subscribe({
           next: (weatherData) => {
-            console.log(`Clima actualizado para ${homeLocation.city}`, weatherData);
             
             // Actualizamos también el pronóstico para la ciudad seleccionada
             this.forecastService.getForecastByCity(homeLocation.city).subscribe({
               next: (forecastData) => {
-                console.log(`Pronóstico actualizado para ${homeLocation.city}`, forecastData);
               },
               error: (error) => {
                 console.error(`Error al obtener el pronóstico para ${homeLocation.city}:`, error);
@@ -141,7 +135,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.componentInstance.citySelected.subscribe((cityName: string) => {
-      console.log(`Ciudad seleccionada: ${cityName}`);
 
       // Guardamos la ciudad en favoritos
       this.favoriteCitiesService.addFavoriteCity(cityName);
@@ -149,12 +142,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       // Hacemos la llamada a la API para actualizar el clima
       this.weatherService.getWeatherByCity(cityName).subscribe({
         next: (weatherData) => {
-          console.log(`Clima actualizado para ${cityName}`, weatherData);
           
           // Actualizamos también el pronóstico para la ciudad seleccionada
           this.forecastService.getForecastByCity(cityName).subscribe({
             next: (forecastData) => {
-              console.log(`Pronóstico actualizado para ${cityName}`, forecastData);
             },
             error: (error) => {
               console.error(`Error al obtener el pronóstico para ${cityName}:`, error);

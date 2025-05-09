@@ -112,8 +112,6 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (weatherData) => {
-          console.log('Weather data:', weatherData);
-
           if (weatherData) {
             // Actualizar la temperatura y condiciones climáticas
             this.temperature = Math.round(weatherData.main.temp);
@@ -159,7 +157,6 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (forecastData) => {
           if (forecastData) {
-            console.log('Forecast data updated from service:', forecastData);
             this.processForecastData(forecastData);
             this.isLoadingForecast = false;
           }

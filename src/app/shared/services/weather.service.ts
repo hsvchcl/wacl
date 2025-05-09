@@ -121,8 +121,6 @@ export class WeatherService {
       this.http.get<WeatherData>(`${environment.openWeatherApiUrl}`, { params })
         .subscribe({
           next: (weatherData) => {
-            console.log('Ubicación obtenida correctamente');
-            
             // Actualizar los datos del clima y la ubicación
             this.currentWeatherSubject.next(weatherData);
             
