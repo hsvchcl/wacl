@@ -18,6 +18,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.getLocation();
+
+    // Limpiar localStorage al cargar la página
+    localStorage.clear();
   }
 
   private getLocation() {
