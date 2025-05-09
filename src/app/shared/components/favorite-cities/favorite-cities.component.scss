@@ -1,0 +1,38 @@
+.favorite-cities-container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  .chips-title {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+    color: var(--text-color, #333);
+  }
+
+  .favorite-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .favorite-city-chip {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: var(--accent-color, #e0f2f1);
+    color: var(--accent-text, #00796b);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 600px) {
+  .favorite-cities-container {
+    .favorite-chips {
+      justify-content: center;
+    }
+  }
+}

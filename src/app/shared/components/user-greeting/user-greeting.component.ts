@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserPreferencesService } from '../../services/user-preferences.service';
+import { FavoriteCitiesComponent } from '../favorite-cities/favorite-cities.component';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-user-greeting',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FavoriteCitiesComponent
+  ],
   templateUrl: './user-greeting.component.html',
   styleUrls: ['./user-greeting.component.scss'],
   animations: [

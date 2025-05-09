@@ -1,0 +1,15 @@
+<div class="favorite-cities-container" *ngIf="favoriteCities.length > 0">
+  <div class="chips-title">Ciudades de interés</div>
+  <mat-chip-set class="favorite-chips">
+    <mat-chip 
+      *ngFor="let city of favoriteCities" 
+      (click)="selectCity(city)" 
+      class="favorite-city-chip"
+      highlighted>
+      {{city}}
+      <button matChipRemove (click)="removeCity(city, $event)">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+  </mat-chip-set>
+</div>

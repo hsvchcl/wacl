@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { WeatherService } from '../../services/weather.service';
 import { ForecastService } from '../../services/forecast.service';
+import { FavoriteCitiesService } from '../../services/favorite-cities.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,6 +35,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private weatherService: WeatherService,
     private forecastService: ForecastService,
+    private favoriteCitiesService: FavoriteCitiesService,
     private dialog: MatDialog
   ) {}
 
@@ -69,6 +71,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     dialogRef.componentInstance.citySelected.subscribe((cityName: string) => {
       console.log(`Ciudad seleccionada: ${cityName}`);
+
+      // Guardamos la ciudad en favoritos
+      this.favoriteCitiesService.addFavoriteCity(cityName);
 
       // Hacemos la llamada a la API para actualizar el clima
       this.weatherService.getWeatherByCity(cityName).subscribe({
