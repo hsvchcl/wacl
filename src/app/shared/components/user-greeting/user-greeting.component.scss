@@ -61,6 +61,38 @@
   text-shadow: 0 2px 10px rgba(255, 255, 255, 0.15);
 }
 
+.greeting-name-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.edit-icon {
+  font-size: 1.2rem;
+  color: #60a5fa;
+  margin-left: 0.5rem;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  
+  &:hover {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+.user-email {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: -0.5rem 0 1rem;
+  font-style: italic;
+  position: relative;
+  background: linear-gradient(120deg, #a5b4fc, #60a5fa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .greeting-subtitle {
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.8);

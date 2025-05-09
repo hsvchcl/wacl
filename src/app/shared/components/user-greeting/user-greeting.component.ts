@@ -3,13 +3,18 @@ import { CommonModule } from '@angular/common';
 import { UserPreferencesService } from '../../services/user-preferences.service';
 import { FavoriteCitiesComponent } from '../favorite-cities/favorite-cities.component';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { WelcomeDialogComponent } from '../welcome/welcome-dialog.component';
 
 @Component({
   selector: 'app-user-greeting',
   standalone: true,
   imports: [
     CommonModule,
-    FavoriteCitiesComponent
+    FavoriteCitiesComponent,
+    MatDialogModule,
+    MatIconModule
   ],
   templateUrl: './user-greeting.component.html',
   styleUrls: ['./user-greeting.component.scss'],
@@ -37,10 +42,15 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class UserGreetingComponent implements OnInit {
   userName: string = '';
+  userEmail: string = '';
   greeting: string = '';
   currentDate: string = '';
+  showEditIcon: boolean = false;
 
-  constructor(private userPreferences: UserPreferencesService) {
+  constructor(
+    private userPreferences: UserPreferencesService,
+    private dialog: MatDialog
+  ) {
     this.updateCurrentDate();
   }
 
@@ -48,8 +58,18 @@ export class UserGreetingComponent implements OnInit {
     this.userPreferences.userInfo$.subscribe(userInfo => {
       if (userInfo) {
         this.userName = userInfo.name;
+        this.userEmail = userInfo.email;
         this.updateGreeting();
       }
+    });
+  }
+  
+  openEditProfileDialog(): void {
+    const dialogRef = this.dialog.open(WelcomeDialogComponent, {
+      width: '400px',
+      hasBackdrop: true,
+      backdropClass: ['backdrop-blur'],
+      panelClass: ['modern-dialog']
     });
   }
 

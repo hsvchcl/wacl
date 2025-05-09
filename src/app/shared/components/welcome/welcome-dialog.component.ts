@@ -41,6 +41,10 @@ export class WelcomeDialogComponent {
   userName: string = '';
   userEmail: string = '';
   animationState: 'visible' | 'hidden' = 'visible';
+  isUpdate: boolean = false;
+  dialogTitle: string = '¡Bienvenido a Weather App!';
+  dialogPrompt: string = 'Para personalizar tu experiencia, por favor ingresa tus datos:';
+  buttonText: string = 'Continuar';
 
   constructor(
     private dialogRef: MatDialogRef<WelcomeDialogComponent>,
@@ -48,6 +52,17 @@ export class WelcomeDialogComponent {
   ) {
     // Configurar el diálogo para usar nuestra animación personalizada al cerrar
     this.dialogRef.addPanelClass('fade-dialog');
+    
+    // Comprobar si ya existen datos de usuario (actualización vs registro)
+    const userInfo = this.userPreferences.getUserInfo();
+    if (userInfo) {
+      this.userName = userInfo.name;
+      this.userEmail = userInfo.email;
+      this.isUpdate = true;
+      this.dialogTitle = 'Actualizar perfil';
+      this.dialogPrompt = 'Actualiza los datos de tu perfil:';
+      this.buttonText = 'Actualizar';
+    }
   }
 
   save(): void {
