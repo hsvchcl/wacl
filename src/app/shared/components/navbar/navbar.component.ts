@@ -65,6 +65,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       width: '90%',
       maxWidth: '800px',
       panelClass: 'cities-modal-container',
+      backdropClass: 'backdrop-blur',
       autoFocus: false,
       disableClose: false,
     });
