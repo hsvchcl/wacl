@@ -5,6 +5,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { WeatherService } from '../../services/weather.service';
+import { ForecastService } from '../../services/forecast.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private weatherService: WeatherService,
+    private forecastService: ForecastService,
     private dialog: MatDialog
   ) {}
 
@@ -72,6 +74,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.weatherService.getWeatherByCity(cityName).subscribe({
         next: (weatherData) => {
           console.log(`Clima actualizado para ${cityName}`, weatherData);
+          
+          // Actualizamos también el pronóstico para la ciudad seleccionada
+          this.forecastService.getForecastByCity(cityName).subscribe({
+            next: (forecastData) => {
+              console.log(`Pronóstico actualizado para ${cityName}`, forecastData);
+            },
+            error: (error) => {
+              console.error(`Error al obtener el pronóstico para ${cityName}:`, error);
+            }
+          });
         },
         error: (error) => {
           console.error(`Error al obtener el clima para ${cityName}:`, error);

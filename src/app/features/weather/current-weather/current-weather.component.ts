@@ -151,22 +151,37 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
           this.isLoadingWeather = false; // También marcar como cargado en caso de error
         }
       });
+      
+    // Suscribirse directamente al observable del pronóstico
+    // Esto permitirá que los datos se actualicen cuando cambie el pronóstico desde cualquier componente
+    this.forecastSubscription = this.forecastService.forecast$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (forecastData) => {
+          if (forecastData) {
+            console.log('Forecast data updated from service:', forecastData);
+            this.processForecastData(forecastData);
+            this.isLoadingForecast = false;
+          }
+        },
+        error: (error) => {
+          console.error('Error al obtener el pronóstico:', error);
+          this.isLoadingForecast = false;
+        }
+      });
   }
 
   loadForecast(lat: number, lon: number): void {
     this.isLoadingForecast = true;
     
-    this.forecastSubscription = this.forecastService
+    // Utilizamos getForecastByCoords para actualizar el pronóstico basado en coordenadas
+    // No necesitamos procesar los datos aquí ya que la suscripción a forecast$ se encargará de ello
+    this.forecastService
       .getForecastByCoords(lat, lon)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (forecastData) => {
-          console.log('Forecast data:', forecastData);
-          this.processForecastData(forecastData);
-          this.isLoadingForecast = false;
-        },
         error: (error) => {
-          console.error('Error al obtener el pronóstico:', error);
+          console.error('Error al obtener el pronóstico por coordenadas:', error);
           this.isLoadingForecast = false;
         }
       });
