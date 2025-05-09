@@ -2,6 +2,7 @@ import { Component, Input, OnInit, LOCALE_ID, Inject } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import localeEs from '@angular/common/locales/es';
+import { WeatherConditionPipe } from '../../pipes/weather-condition.pipe';
 
 // Registrar el locale español para los formatos de fecha
 registerLocaleData(localeEs, 'es');
@@ -21,7 +22,7 @@ interface ForecastData {
   templateUrl: './forecast.component.html',
   styleUrls: ['./forecast.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule, WeatherConditionPipe],
   providers: [
     { provide: LOCALE_ID, useValue: 'es' }
   ]

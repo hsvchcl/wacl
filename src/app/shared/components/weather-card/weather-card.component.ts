@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { WeatherConditionPipe } from '../../pipes/weather-condition.pipe';
 
 @Component({
   selector: 'app-weather-card',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatProgressBarModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, MatProgressBarModule, WeatherConditionPipe],
   templateUrl: './weather-card.component.html',
   styleUrls: ['./weather-card.component.scss']
 })

@@ -14,7 +14,7 @@
             <span class="temp-value">{{ temperature }}°</span>
             <span class="temp-unit">C</span>
           </div>
-          <div class="condition">{{ weatherCondition }}</div>
+          <div class="condition">{{ weatherCondition | weatherCondition }}</div>
         </ng-container>
         <ng-template #skeletonTemp>
           <div class="skeleton-temperature"></div>

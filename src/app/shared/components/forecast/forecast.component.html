@@ -20,7 +20,7 @@
             <span class="min-temp">{{ forecast.minTemp }}°</span>
           </div>
           <div class="temp">{{ forecast.temperature }}°C</div>
-          <div class="condition">{{ forecast.condition }}</div>
+          <div class="condition">{{ forecast.condition | weatherCondition }}</div>
         </div>
       </div>
     </div>
