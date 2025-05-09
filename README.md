@@ -176,7 +176,7 @@ Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE.md 
 
 ## 👨‍💻 Autor
 
-- Hans Vega - [hsvchcl](https://github.com/hsvchcl)
+- Hans Vergara Chamorro - [hsvchcl](https://github.com/hsvchcl)
 
 ---
 
