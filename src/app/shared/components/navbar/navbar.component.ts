@@ -77,6 +77,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
           console.error(`Error al obtener el clima para ${cityName}:`, error);
         },
       });
+      
+      // Cerramos el modal cuando se selecciona una ciudad
+      dialogRef.close();
+    });
+
+    // Suscripción al evento closeDialog para cerrar el modal
+    dialogRef.componentInstance.closeDialog.subscribe(() => {
+      dialogRef.close();
     });
   }
 }
