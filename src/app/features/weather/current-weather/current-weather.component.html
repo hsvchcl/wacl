@@ -5,35 +5,7 @@
       <app-user-greeting></app-user-greeting>
     </div>
     
-    <!-- Primera fila: Índice UV, Calendario Lunar, Presión Atmosférica -->
-    <div class="bento-item uv-info">
-      <app-uv-indicator
-        [currentDate]="currentDate"
-        [uvIndex]="uvIndex"
-      ></app-uv-indicator>
-    </div>
-    <div class="bento-item moon-info">
-      <app-moon-phase
-        [currentDate]="currentDate"
-      ></app-moon-phase>
-    </div>
-    <div class="bento-item pressure-info">
-      <app-pressure-info
-        [currentDate]="currentDate"
-        [pressure]="atmosphericPressure"
-        [trend]="pressureTrend"
-      ></app-pressure-info>
-    </div>
-    
-    <!-- Segunda fila: Pronóstico semanal a todo ancho -->
-    <div class="bento-item forecast full-width">
-      <app-forecast
-        [weeklyForecast]="weeklyForecast"
-        [isLoading]="isLoadingForecast"
-      ></app-forecast>
-    </div>
-    
-    <!-- Tercera fila: Clima actual, información del viento y ciclo solar -->
+    <!-- Primera fila: Clima actual, información del viento y presión atmosférica -->
     <div class="bento-item main-weather">
       <app-weather-card
         [currentDate]="currentDate"
@@ -51,8 +23,38 @@
         [windGust]="windGust"
         [windPressure]="windPressure"
         [beaufortScale]="beaufortScale"
+        [loading]="isLoadingWeather"
       >
       </app-wind-info>
+    </div>
+    <div class="bento-item pressure-info">
+      <app-pressure-info
+        [currentDate]="currentDate"
+        [pressure]="atmosphericPressure"
+        [trend]="pressureTrend"
+        [loading]="isLoadingWeather"
+      ></app-pressure-info>
+    </div>
+    
+    <!-- Segunda fila: Pronóstico semanal a todo ancho -->
+    <div class="bento-item forecast full-width">
+      <app-forecast
+        [weeklyForecast]="weeklyForecast"
+        [isLoading]="isLoadingForecast"
+      ></app-forecast>
+    </div>
+    
+    <!-- Tercera fila: Índice UV, Calendario Lunar y ciclo solar -->
+    <div class="bento-item uv-info">
+      <app-uv-indicator
+        [currentDate]="currentDate"
+        [uvIndex]="uvIndex"
+      ></app-uv-indicator>
+    </div>
+    <div class="bento-item moon-info">
+      <app-moon-phase
+        [currentDate]="currentDate"
+      ></app-moon-phase>
     </div>
     <div class="bento-item sun-info">
       <app-sunrise-sunset

@@ -3,7 +3,30 @@
     <h2>Presión Atmosférica</h2>
   </div>
   
-  <div class="pressure-content">
+  <!-- Skeleton Loading -->
+  <div class="pressure-content skeleton" *ngIf="loading">
+    <div class="pressure-display">
+      <div class="skeleton-value"></div>
+      <div class="skeleton-category"></div>
+    </div>
+    
+    <div class="pressure-forecast">
+      <div class="skeleton-title"></div>
+      <div class="skeleton-text"></div>
+      
+      <div class="pressure-info">
+        <div class="skeleton-text"></div>
+        <div class="skeleton-list">
+          <div class="skeleton-item"></div>
+          <div class="skeleton-item"></div>
+          <div class="skeleton-item"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Contenido Real -->
+  <div class="pressure-content" *ngIf="!loading">
     <div class="pressure-display">
       <div class="pressure-value">
         {{ pressure }} <span class="units">hPa</span>

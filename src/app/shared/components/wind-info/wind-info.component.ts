@@ -17,4 +17,5 @@ export class WindInfoComponent {
   @Input() windGust: number = 0;
   @Input() windPressure: number = 0;
   @Input() beaufortScale: number = 0;
+  @Input() loading: boolean = false;
 }

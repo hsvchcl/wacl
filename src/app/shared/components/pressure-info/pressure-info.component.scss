@@ -1,8 +1,22 @@
+// Animación para el skeleton loading
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
 .pressure-card {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  // Cambio a un gradiente que representa mejor las capas atmosféricas
+  background: linear-gradient(135deg, #78a4d4 0%, #5f8fc9 50%, #3e6ca8 100%);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 10px 20px rgba(30, 60, 114, 0.2);
+  box-shadow: 0 10px 20px rgba(62, 108, 168, 0.25);
   height: 100%;
   width: 100%;
   display: flex;
@@ -19,7 +33,7 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(rgba(255, 255, 255, 0.1), transparent 70%);
+    background: radial-gradient(rgba(255, 255, 255, 0.15), transparent 70%);
     z-index: 0;
   }
 }
@@ -33,11 +47,11 @@
   z-index: 1;
 
   h2 {
-    font-size: 1.6rem;
     margin: 0;
-    font-weight: 700;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   }
 
   .current-date {
@@ -53,7 +67,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
   position: relative;
   z-index: 1;
 }
@@ -62,32 +76,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  padding: 15px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
   margin-bottom: 15px;
 
   .pressure-value {
     font-size: 2.5rem;
-    font-weight: bold;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+    margin-bottom: 5px;
     
     .units {
-      font-size: 1.2rem;
+      font-size: 1rem;
+      font-weight: 400;
       opacity: 0.8;
     }
     
     .trend-icon {
-      margin-left: 10px;
-      font-size: 1.8rem;
-      display: inline-block;
+      font-size: 1.2rem;
+      margin-left: 8px;
       animation: pulse 2s infinite;
     }
   }
 
   .pressure-category {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
     background: rgba(255, 255, 255, 0.15);
     padding: 5px 15px;
     border-radius: 20px;
@@ -96,40 +113,107 @@
 }
 
 .pressure-forecast {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 15px;
   backdrop-filter: blur(5px);
   
   h3 {
-    font-size: 1.2rem;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
     color: white;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     padding-bottom: 8px;
   }
 
   p {
-    margin: 0 0 12px;
+    margin: 0 0 15px;
+    line-height: 1.5;
     font-size: 1.05rem;
   }
 
   .pressure-info {
-    margin-top: 15px;
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.9);
+    margin-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 10px;
+    
+    p {
+      margin-top: 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
     
     ul {
       padding-left: 20px;
-      margin: 8px 0 0;
+      margin: 10px 0 0;
       
       li {
         margin-bottom: 5px;
+        font-size: 0.85rem;
+        opacity: 0.9;
         
         &:last-child {
           margin-bottom: 0;
         }
+      }
+    }
+  }
+}
+
+// Estilos para el skeleton
+.skeleton {
+  .skeleton-value,
+  .skeleton-category,
+  .skeleton-title,
+  .skeleton-text,
+  .skeleton-item {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  
+  .skeleton-value {
+    height: 40px;
+    width: 120px;
+    margin: 10px auto;
+  }
+  
+  .skeleton-category {
+    height: 20px;
+    width: 80px;
+    margin: 0 auto;
+  }
+  
+  .skeleton-title {
+    height: 20px;
+    width: 100px;
+    margin-bottom: 15px;
+  }
+  
+  .skeleton-text {
+    height: 16px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .skeleton-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+    
+    .skeleton-item {
+      height: 14px;
+      width: 90%;
+      
+      &:nth-child(2) {
+        width: 85%;
+      }
+      
+      &:nth-child(3) {
+        width: 80%;
       }
     }
   }

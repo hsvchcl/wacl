@@ -12,6 +12,7 @@ export class PressureInfoComponent {
   @Input() currentDate: Date = new Date();
   @Input() pressure: number = 1013; // Presión en hPa (hectopascales)
   @Input() trend: string = 'stable'; // 'rising', 'falling', 'stable'
+  @Input() loading: boolean = false; // Propiedad para controlar el estado de carga
 
   // Método para obtener descripción de la presión atmosférica
   get pressureCategory(): string {

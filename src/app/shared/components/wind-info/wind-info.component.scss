@@ -7,11 +7,11 @@
 .wind-card {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #64b5f6, #2196f3, #0d47a1);
+  background: linear-gradient(135deg, #7eb6c4, #2e5c6e, #1a3d4c);
   color: white;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(33, 150, 243, 0.3);
+  box-shadow: 0 8px 32px rgba(46, 92, 110, 0.4);
   backdrop-filter: blur(4px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   display: flex;
@@ -25,9 +25,20 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,20 Q50,5 70,20 T90,40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>') repeat;
-    opacity: 0.5;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="100" viewBox="0 0 200 100"><path d="M0,50 Q25,30 50,50 T100,50 T150,50 T200,50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="2"/><path d="M0,70 Q25,50 50,70 T100,70 T150,70 T200,70" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/><path d="M0,30 Q25,10 50,30 T100,30 T150,30 T200,30" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2"/></svg>') repeat-x;
+    background-size: 200px 100px;
+    opacity: 0.6;
     z-index: 0;
+    animation: moveWaves 20s linear infinite;
+  }
+}
+
+@keyframes moveWaves {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 200px 0;
   }
 }
 
@@ -52,12 +63,50 @@
     font-size: 1.5rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.95);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   .date {
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.9rem;
+  }
+  
+  .wind-animation {
+    display: flex;
+    gap: 8px;
+    
+    .wind-line {
+      height: 3px;
+      width: 30px;
+      background-color: rgba(255, 255, 255, 0.6);
+      border-radius: 3px;
+      
+      &:nth-child(1) {
+        width: 12px;
+        animation: windBlow 2s infinite ease-in-out;
+      }
+      
+      &:nth-child(2) {
+        width: 24px;
+        animation: windBlow 2s infinite ease-in-out 0.2s;
+      }
+      
+      &:nth-child(3) {
+        width: 18px;
+        animation: windBlow 2s infinite ease-in-out 0.4s;
+      }
+    }
+  }
+}
+
+@keyframes windBlow {
+  0%, 100% {
+    transform: scaleX(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scaleX(1.5);
+    opacity: 0.9;
   }
 }
 
@@ -76,23 +125,75 @@
   animation: float 6s ease-in-out infinite;
 
   .wind-icon {
-    font-size: 48px;
-    height: 48px;
-    width: 48px;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 52px;
+    height: 52px;
+    width: 52px;
+    color: rgba(255, 255, 255, 0.95);
+    animation: windRotate 8s ease-in-out infinite;
   }
 
   .wind-value {
-    font-size: 3rem;
+    font-size: 3.2rem;
     font-weight: 700;
     color: white;
     margin: 10px 0 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
   }
 
   .wind-unit {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 1px;
+  }
+  
+  // Skeleton styles
+  &.skeleton {
+    .skeleton-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+    
+    .skeleton-value {
+      width: 80px;
+      height: 48px;
+      margin-top: 10px;
+      border-radius: 4px;
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+    
+    .skeleton-unit {
+      width: 40px;
+      height: 18px;
+      margin-top: 5px;
+      border-radius: 4px;
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+  }
+}
+
+@keyframes windRotate {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 
@@ -100,11 +201,18 @@
   display: flex;
   justify-content: space-around;
   margin: 12px 0;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 12px;
-  padding: 0.75rem;
-  backdrop-filter: blur(8px);
+  padding: 0.8rem;
+  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
 }
 
 .detail-item {
@@ -117,8 +225,13 @@
     font-size: 24px;
     height: 24px;
     width: 24px;
-    color: #bbdefb;
+    color: #c0e4ec;
     margin-right: 12px;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover .detail-icon {
+    transform: scale(1.15);
   }
 
   .detail-info {
@@ -126,14 +239,48 @@
     flex-direction: column;
 
     .detail-label {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.5px;
     }
 
     .detail-value {
       font-size: 1.1rem;
       font-weight: 500;
       color: white;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  // Skeleton styles
+  &.skeleton {
+    .skeleton-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+      margin-right: 12px;
+    }
+    
+    .skeleton-label {
+      width: 60px;
+      height: 12px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+    
+    .skeleton-value {
+      width: 90px;
+      height: 16px;
+      border-radius: 4px;
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 70%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite linear;
     }
   }
 }
@@ -143,6 +290,6 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }

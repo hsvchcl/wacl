@@ -3,49 +3,102 @@
     <div class="card-content">
       <div class="weather-header">
         <h2 class="title">Información del Viento</h2>
+        <div class="wind-animation">
+          <div class="wind-line"></div>
+          <div class="wind-line"></div>
+          <div class="wind-line"></div>
+        </div>
       </div>
       
-      <div class="wind-main">
-        <div class="wind-speed-display">
-          <mat-icon class="wind-icon" aria-hidden="false" aria-label="Viento">air</mat-icon>
-          <span class="wind-value">{{ windSpeed }}</span>
-          <span class="wind-unit">km/h</span>
-        </div>
-      </div>
-  
-      <div class="wind-details">
-        <div class="detail-item">
-          <mat-icon class="detail-icon">navigation</mat-icon>
-          <div class="detail-info">
-            <span class="detail-label">Dirección</span>
-            <span class="detail-value">{{ windDirection }}</span>
+      <!-- Contenido normal -->
+      <ng-container *ngIf="!loading">
+        <div class="wind-main">
+          <div class="wind-speed-display">
+            <mat-icon class="wind-icon" aria-hidden="false" aria-label="Viento">air</mat-icon>
+            <span class="wind-value">{{ windSpeed }}</span>
+            <span class="wind-unit">km/h</span>
           </div>
         </div>
-        <div class="detail-item">
-          <mat-icon class="detail-icon">speed</mat-icon>
-          <div class="detail-info">
-            <span class="detail-label">Ráfagas</span>
-            <span class="detail-value">{{ windGust }} km/h</span>
+    
+        <div class="wind-details">
+          <div class="detail-item">
+            <mat-icon class="detail-icon">navigation</mat-icon>
+            <div class="detail-info">
+              <span class="detail-label">Dirección</span>
+              <span class="detail-value">{{ windDirection }}</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">speed</mat-icon>
+            <div class="detail-info">
+              <span class="detail-label">Ráfagas</span>
+              <span class="detail-value">{{ windGust }} km/h</span>
+            </div>
           </div>
         </div>
-      </div>
-  
-      <div class="wind-details">
-        <div class="detail-item">
-          <mat-icon class="detail-icon">compress</mat-icon>
-          <div class="detail-info">
-            <span class="detail-label">Presión</span>
-            <span class="detail-value">{{ windPressure }} hPa</span>
+    
+        <div class="wind-details">
+          <div class="detail-item">
+            <mat-icon class="detail-icon">compress</mat-icon>
+            <div class="detail-info">
+              <span class="detail-label">Presión</span>
+              <span class="detail-value">{{ windPressure }} hPa</span>
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon class="detail-icon">assessment</mat-icon>
+            <div class="detail-info">
+              <span class="detail-label">Escala Beaufort</span>
+              <span class="detail-value">{{ beaufortScale }} - Moderado</span>
+            </div>
           </div>
         </div>
-        <div class="detail-item">
-          <mat-icon class="detail-icon">assessment</mat-icon>
-          <div class="detail-info">
-            <span class="detail-label">Escala Beaufort</span>
-            <span class="detail-value">{{ beaufortScale }} - Moderado</span>
+      </ng-container>
+
+      <!-- Skeleton loader -->
+      <ng-container *ngIf="loading">
+        <div class="wind-main">
+          <div class="wind-speed-display skeleton">
+            <div class="skeleton-icon"></div>
+            <div class="skeleton-value"></div>
+            <div class="skeleton-unit"></div>
           </div>
         </div>
-      </div>
+    
+        <div class="wind-details">
+          <div class="detail-item skeleton">
+            <div class="skeleton-icon"></div>
+            <div class="detail-info">
+              <div class="skeleton-label"></div>
+              <div class="skeleton-value"></div>
+            </div>
+          </div>
+          <div class="detail-item skeleton">
+            <div class="skeleton-icon"></div>
+            <div class="detail-info">
+              <div class="skeleton-label"></div>
+              <div class="skeleton-value"></div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="wind-details">
+          <div class="detail-item skeleton">
+            <div class="skeleton-icon"></div>
+            <div class="detail-info">
+              <div class="skeleton-label"></div>
+              <div class="skeleton-value"></div>
+            </div>
+          </div>
+          <div class="detail-item skeleton">
+            <div class="skeleton-icon"></div>
+            <div class="detail-info">
+              <div class="skeleton-label"></div>
+              <div class="skeleton-value"></div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </mat-card>
 </div>

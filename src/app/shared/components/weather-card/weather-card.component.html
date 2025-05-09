@@ -1,34 +1,57 @@
 <div class="weather-card-container">
-  <mat-card class="weather-card">
+  <mat-card class="weather-card" [ngClass]="{'wind-theme': true}">
     <div class="card-content">
+      <!-- Header with skeleton -->
       <div class="weather-header">
         <h2 class="title">Clima Actual</h2>
+        <span class="date">{{ currentDate | date:'EEEE, d MMMM' }}</span>
       </div>
       
+      <!-- Main weather display with skeleton -->
       <div class="weather-main">
-        <div class="temperature-display">
-          <span class="temp-value">{{ temperature }}°</span>
-          <span class="temp-unit">C</span>
-        </div>
-        <div class="condition">{{ weatherCondition }}</div>
+        <ng-container *ngIf="!loading; else skeletonTemp">
+          <div class="temperature-display">
+            <span class="temp-value">{{ temperature }}°</span>
+            <span class="temp-unit">C</span>
+          </div>
+          <div class="condition">{{ weatherCondition }}</div>
+        </ng-container>
+        <ng-template #skeletonTemp>
+          <div class="skeleton-temperature"></div>
+          <div class="skeleton-condition"></div>
+        </ng-template>
       </div>
 
+      <!-- Weather details with skeleton -->
       <div class="weather-details">
         <div class="detail-item">
           <mat-icon class="detail-icon">opacity</mat-icon>
           <div class="detail-info">
             <span class="detail-label">Humedad</span>
-            <span class="detail-value">{{ humidity }}%</span>
+            <span class="detail-value">
+              <ng-container *ngIf="!loading; else skeletonHumidity">{{ humidity }}%</ng-container>
+              <ng-template #skeletonHumidity>
+                <div class="skeleton-value"></div>
+              </ng-template>
+            </span>
           </div>
         </div>
         <div class="detail-item">
           <mat-icon class="detail-icon">air</mat-icon>
           <div class="detail-info">
             <span class="detail-label">Viento</span>
-            <span class="detail-value">{{ windSpeed }} km/h</span>
+            <span class="detail-value">
+              <ng-container *ngIf="!loading; else skeletonWind">{{ windSpeed }} km/h</ng-container>
+              <ng-template #skeletonWind>
+                <div class="skeleton-value"></div>
+              </ng-template>
+            </span>
           </div>
         </div>
       </div>
+      
+      <!-- Loading bar at bottom -->
+      <mat-progress-bar *ngIf="loading" mode="indeterminate" class="loading-bar"></mat-progress-bar>
     </div>
   </mat-card>
 </div>
