@@ -2,6 +2,7 @@
 
 ![Versión de Angular](https://img.shields.io/badge/angular-19.2.11-red)
 ![Material UI](https://img.shields.io/badge/angular%20material-19.2.15-blue)
+![ESLint](https://img.shields.io/badge/ESLint-configured-green)
 
 Una aplicación web desarrollada en Angular que permite consultar información meteorológica en tiempo real, utilizando la API de OpenWeatherMap y servicios de geolocalización.
 
@@ -25,10 +26,25 @@ Una aplicación web desarrollada en Angular que permite consultar información m
 
 - **Angular 19.2.11** - Framework de desarrollo frontend
 - **Angular Material 19.2.15** - Componentes UI
+- **ESLint** - Linting y análisis estático de código
 - **RxJS** - Programación reactiva
 - **OpenWeatherMap API** - Datos meteorológicos
 - **ipinfo.io** - Servicio de geolocalización
 - **Firebase Hosting** - Despliegue de la aplicación
+
+## 🔍 Linting
+
+El proyecto utiliza ESLint para mantener un código limpio y consistente. Para ejecutar el linting:
+
+```bash
+npm run lint
+```
+
+Para corregir automáticamente los problemas que sean posibles:
+
+```bash
+npm run lint:fix
+```
 
 ## 🚀 Instalación y Ejecución
 
@@ -42,7 +58,7 @@ Una aplicación web desarrollada en Angular que permite consultar información m
 
 1. Clona este repositorio:
    ```bash
-   git clone https://github.com/hsvchcl/PruebaTecnicaTinet/prueba-tecnica-tinet-angular.git
+   git clone https://github.com/hsvchcl/wacl.git
    cd prueba-tecnica-tinet-angular
    ```
 
