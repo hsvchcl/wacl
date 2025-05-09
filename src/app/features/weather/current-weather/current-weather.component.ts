@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { Subject, Subscription } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 import { WeatherCardComponent } from '../../../shared/components/weather-card/weather-card.component';
 import { ForecastComponent } from '../../../shared/components/forecast/forecast.component';
 import { WindInfoComponent } from '../../../shared/components/wind-info/wind-info.component';
@@ -14,6 +14,17 @@ import { PressureInfoComponent } from '../../../shared/components/pressure-info/
 import { SunriseSunsetComponent } from '../../../shared/components/sunrise-sunset/sunrise-sunset.component';
 import { WeatherService } from '../../../shared/services/weather.service';
 import { UserGreetingComponent } from '../../../shared/components/user-greeting/user-greeting.component';
+
+// Agregar la interface ForecastData
+interface ForecastData {
+  date: Date;
+  temperature: number;
+  icon: string;
+  description: string;
+  condition: string;
+  maxTemp: number;
+  minTemp: number;
+}
 
 @Component({
   selector: 'app-current-weather',
@@ -53,10 +64,14 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
   // Propiedades para la presión atmosférica
   atmosphericPressure = 0;
   pressureTrend = 'stable';
-  
+
   // Propiedades para la salida y puesta del sol
   sunrise = 0;
   sunset = 0;
+
+  // Propiedad para el pronóstico (vacía ya que no lo cargamos más)
+  weeklyForecast: ForecastData[] = [];
+  isLoadingForecast = false;
 
   isMobile = false;
   private destroy$ = new Subject<void>();
@@ -76,8 +91,10 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
         this.isMobile = result.matches;
       });
 
+    // Suscribirse al clima actual
     this.weatherSubscription = this.weatherService
       .getCurrentLocationWeather()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((weatherData) => {
         console.log('Weather data:', weatherData);
 
@@ -98,14 +115,20 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
           this.beaufortScale = this.calculateBeaufortScale(
             weatherData.wind.speed
           );
-          
+
           // Actualizar datos de amanecer y atardecer
-          if (weatherData.sys && weatherData.sys.sunrise && weatherData.sys.sunset) {
+          if (
+            weatherData.sys &&
+            weatherData.sys.sunrise &&
+            weatherData.sys.sunset
+          ) {
             this.sunrise = weatherData.sys.sunrise;
             this.sunset = weatherData.sys.sunset;
           }
         }
       });
+
+    // Ya no necesitamos cargar el pronóstico
   }
 
   ngOnDestroy(): void {
@@ -114,22 +137,35 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
     if (this.weatherSubscription) {
       this.weatherSubscription.unsubscribe();
     }
+    // Se eliminó la referencia al forecastSubscription
   }
 
   private getWindDirection(degrees: number): string {
     const directions = [
       'Norte',
-      'Noreste',
+      'NorNoreste',
+      'NorEste',
+      'EsteNorEste',
       'Este',
-      'Sureste',
+      'EsteSurEste',
+      'SurEste',
+      'SurSurEste',
       'Sur',
-      'Suroeste',
+      'SurSurOeste',
+      'SurOeste',
+      'OesteSurOeste',
       'Oeste',
-      'Noroeste',
+      'OesteNorOeste',
+      'NorOeste',
+      'NorNorOeste',
     ];
-    const index = Math.round(degrees / 45) % 8;
+
+    // Calcular el índice en el array de direcciones
+    const index = Math.round(degrees / 22.5) % 16;
     return directions[index];
   }
+
+  // Métodos relacionados con forecast fueron eliminados
 
   private calculateBeaufortScale(windSpeed: number): number {
     // Velocidad del viento en m/s

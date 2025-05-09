@@ -2,21 +2,23 @@
   <mat-card class="forecast-card">
     <div class="card-content">
       <div class="forecast-header">
-        <h2 class="title">Pronóstico Semanal</h2>
+        <h2 class="title">Pronóstico 5 Días</h2>
       </div>
       
-      <div class="forecast-list">
+      <div class="forecast-list" *ngIf="!isLoading; else loadingTemplate">
         <div class="forecast-item" *ngFor="let forecast of weeklyForecast">
-          <div class="day">{{ forecast.date | date:'EEE' }}</div>
+          <div class="day">{{ forecast.date | date:'EEE' | uppercase }}</div>
           <div class="icon-container">
-            <mat-icon class="weather-icon">
-              {{ forecast.condition === 'Soleado' ? 'wb_sunny' : 
-                 forecast.condition === 'Despejado' ? 'wb_sunny' :
-                 forecast.condition === 'Lluvioso' ? 'rainy' : 
-                 forecast.condition === 'Parcialmente nublado' ? 'partly_cloudy_day' : 
-                 forecast.condition === 'Nublado' ? 'cloud' :
-                 'cloud' }}
-            </mat-icon>
+            <!-- Usar iconos de OpenWeatherMap -->
+            <img 
+              [src]="'https://openweathermap.org/img/wn/' + forecast.icon + '@2x.png'" 
+              [alt]="forecast.condition" 
+              class="weather-icon"
+            />
+          </div>
+          <div class="temp-range">
+            <span class="max-temp">{{ forecast.maxTemp }}°</span>
+            <span class="min-temp">{{ forecast.minTemp }}°</span>
           </div>
           <div class="temp">{{ forecast.temperature }}°C</div>
           <div class="condition">{{ forecast.condition }}</div>
@@ -25,3 +27,9 @@
     </div>
   </mat-card>
 </div>
+
+<ng-template #loadingTemplate>
+  <div class="loading-container">
+    <p>Cargando pronóstico...</p>
+  </div>
+</ng-template>

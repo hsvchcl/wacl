@@ -1,27 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
 
-interface DailyForecast {
+interface ForecastData {
   date: Date;
   temperature: number;
+  icon: string;
+  description: string;
   condition: string;
+  maxTemp: number;
+  minTemp: number;
 }
 
 @Component({
   selector: 'app-forecast',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule],
   templateUrl: './forecast.component.html',
-  styleUrl: './forecast.component.scss'
+  styleUrls: ['./forecast.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatCardModule]
 })
-export class ForecastComponent {
-  weeklyForecast: DailyForecast[] = [
-    { date: new Date(), temperature: 25, condition: 'Soleado' },
-    { date: new Date(Date.now() + 86400000), temperature: 23, condition: 'Parcialmente nublado' },
-    { date: new Date(Date.now() + 172800000), temperature: 22, condition: 'Lluvioso' },
-    { date: new Date(Date.now() + 259200000), temperature: 24, condition: 'Soleado' },
-    { date: new Date(Date.now() + 345600000), temperature: 26, condition: 'Despejado' }
-  ];
+export class ForecastComponent implements OnInit {
+  @Input() weeklyForecast: ForecastData[] = [];
+  @Input() isLoading: boolean = true;
+
+  ngOnInit() {
+    // Ya no es necesario cargar los datos desde aquí
+  }
 }

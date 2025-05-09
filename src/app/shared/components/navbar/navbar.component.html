@@ -7,7 +7,7 @@
     <!-- Botones para pantalla grande -->
     <div class="desktop-menu">
       <div class="bento-nav-items">
-        <button mat-button class="bento-button" routerLink="/current">
+        <button mat-button class="bento-button" (click)="openCitiesModal()">
           <mat-icon>wb_sunny</mat-icon>
           <span>Clima Actual en {{currentCity ? currentCity : 'cargando...'}}</span>
         </button>
@@ -23,7 +23,7 @@
 
 <!-- Menú móvil desplegable -->
 <div class="mobile-menu bento-mobile-menu" [class.show]="isMenuOpen">
-  <button mat-button class="bento-mobile-button" routerLink="/current" (click)="toggleMenu()">
+  <button mat-button class="bento-mobile-button" (click)="openCitiesModal(); toggleMenu()">
     <mat-icon>wb_sunny</mat-icon>
     <span>Clima Actual en {{currentCity ? currentCity : 'cargando...'}}</span>
   </button>

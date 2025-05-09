@@ -16,9 +16,6 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease;
-    
-    /* Se eliminó el efecto hover */
     
     .card-content {
       padding: 1.5rem;
@@ -26,6 +23,16 @@
       display: flex;
       flex-direction: column;
     }
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    color: white;
+    font-size: 1.2rem;
   }
   
   .forecast-header {
@@ -55,11 +62,12 @@
       padding: 1.2rem;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 16px;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       overflow: hidden;
       backdrop-filter: blur(5px);
-      animation: fadeIn 0.6s ease-out forwards;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       
       /* Se eliminó el pseudo-elemento ::before y la animación hover */
       
@@ -72,22 +80,19 @@
       }
       
       .icon-container {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
         margin: 0 auto 0.8rem;
         display: flex;
         align-items: center;
         justify-content: center;
         background: rgba(255, 255, 255, 0.2);
         border-radius: 50%;
-        /* Se eliminó la sombra */
       }
       
       .weather-icon {
-        font-size: 2.5rem;
-        height: 2.5rem;
-        width: 2.5rem;
-        color: white;
+        height: 60px;
+        width: 60px;
         /* Se eliminó el filtro de sombra */
       }
       
@@ -95,7 +100,24 @@
         font-size: 1.5rem;
         font-weight: 700;
         margin: 0.8rem 0;
-        /* Se eliminó la sombra del texto */
+      }
+      
+      .temp-range {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 0.5rem 0;
+        
+        .max-temp {
+          font-weight: 700;
+          font-size: 1.2rem;
+        }
+        
+        .min-temp {
+          font-weight: 500;
+          font-size: 1.2rem;
+          opacity: 0.8;
+        }
       }
       
       .condition {
@@ -103,14 +125,10 @@
         font-weight: 500;
         color: rgba(255, 255, 255, 0.9);
         margin-top: 0.3rem;
+        text-transform: capitalize;
       }
       
       // Colores específicos según condición climática
-      &:nth-child(1) { animation-delay: 0.1s; }
-      &:nth-child(2) { animation-delay: 0.2s; }
-      &:nth-child(3) { animation-delay: 0.3s; }
-      &:nth-child(4) { animation-delay: 0.4s; }
-      &:nth-child(5) { animation-delay: 0.5s; }
       
       &:has(.condition:contains("Soleado")), &:has(.condition:contains("Despejado")) {
         background: linear-gradient(135deg, #FF9500, #FF5F6D);
@@ -119,7 +137,6 @@
         }
         .weather-icon {
           color: #FFEB3B;
-          animation: pulse 2s infinite;
         }
       }
       
@@ -130,7 +147,6 @@
         }
         .weather-icon {
           color: #E1F5FE;
-          animation: bounce 2s infinite;
         }
       }
       
@@ -157,19 +173,4 @@
   }
 }
 
-// Animaciones
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
+// No hay animaciones

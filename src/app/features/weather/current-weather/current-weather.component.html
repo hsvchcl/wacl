@@ -27,7 +27,10 @@
     
     <!-- Segunda fila: Pronóstico semanal a todo ancho -->
     <div class="bento-item forecast full-width">
-      <app-forecast></app-forecast>
+      <app-forecast
+        [weeklyForecast]="weeklyForecast"
+        [isLoading]="isLoadingForecast"
+      ></app-forecast>
     </div>
     
     <!-- Tercera fila: Clima actual, información del viento y ciclo solar -->

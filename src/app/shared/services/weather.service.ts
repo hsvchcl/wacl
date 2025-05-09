@@ -38,34 +38,21 @@ interface WeatherData {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeatherService {
-  private currentLocationSubject = new BehaviorSubject<GeoLocation | null>(null);
+  private currentLocationSubject = new BehaviorSubject<GeoLocation | null>(
+    null
+  );
   public currentLocation$ = this.currentLocationSubject.asObservable();
   private currentWeatherSubject = new BehaviorSubject<WeatherData | null>(null);
   public currentWeather$ = this.currentWeatherSubject.asObservable();
 
   constructor(private http: HttpClient) {
+    // Solo inicializamos la obtención de la ubicación del usuario
+    // Los métodos getWeatherByCoords y getWeatherByCity actualizan directamente los subjects
+    // por lo que no necesitamos suscribirnos adicionalmente a los cambios de location
     this.getUserLocation();
-    
-    // Suscribirse a los cambios de ubicación para actualizar el clima
-    this.currentLocation$.pipe(
-      switchMap(location => {
-        if (location?.lat && location?.lon) {
-          // Obtener el clima actual
-          return this.getWeatherByCoords(location.lat, location.lon);
-        } else if (location?.city) {
-          // Obtener el clima actual
-          return this.getWeatherByCity(location.city);
-        }
-        return of(null);
-      })
-    ).subscribe(weatherData => {
-      if (weatherData) {
-        this.currentWeatherSubject.next(weatherData);
-      }
-    });
   }
 
   getUserLocation(): void {
@@ -78,7 +65,7 @@ export class WeatherService {
             city: '',
             country: '',
             lat,
-            lon
+            lon,
           };
           this.currentLocationSubject.next(location);
           this.getLocationNameByCoords(lat, lon);
@@ -86,28 +73,24 @@ export class WeatherService {
         (error) => {
           console.error('Error getting location:', error);
           // Si falla la geolocalización, intentamos con una ubicación por defecto
-          this.getWeatherByCity('Santiago').subscribe(
-            weatherData => {
-              this.currentWeatherSubject.next(weatherData);
-              this.currentLocationSubject.next({
-                city: 'Santiago',
-                country: 'CL'
-              });
-            }
-          );
+          this.getWeatherByCity('Santiago').subscribe((weatherData) => {
+            this.currentWeatherSubject.next(weatherData);
+            this.currentLocationSubject.next({
+              city: 'Santiago',
+              country: 'CL',
+            });
+          });
         }
       );
     } else {
       // Si no hay geolocalización disponible, usar ubicación por defecto
-      this.getWeatherByCity('Santiago').subscribe(
-        weatherData => {
-          this.currentWeatherSubject.next(weatherData);
-          this.currentLocationSubject.next({
-            city: 'Santiago',
-            country: 'CL'
-          });
-        }
-      );
+      this.getWeatherByCity('Santiago').subscribe((weatherData) => {
+        this.currentWeatherSubject.next(weatherData);
+        this.currentLocationSubject.next({
+          city: 'Santiago',
+          country: 'CL',
+        });
+      });
     }
   }
 
@@ -115,24 +98,32 @@ export class WeatherService {
     const params = {
       lat: lat.toString(),
       lon: lon.toString(),
-      appid: environment.openWeatherApiKey
+      appid: environment.openWeatherApiKey,
+      units: 'metric',
+      lang: 'es',
     };
 
+    // Hacemos una sola llamada directamente al endpoint, evitando llamadas circulares
     this.http.get<WeatherData>(`${environment.openWeatherApiUrl}`, { params })
       .subscribe({
-        next: (data) => {
+        next: (weatherData) => {
+          console.log('Ubicación obtenida correctamente');
+          
+          // Actualizar los datos del clima y la ubicación
+          this.currentWeatherSubject.next(weatherData);
+          
+          // Actualizar la ubicación
           const location: GeoLocation = {
-            city: data.name,
-            country: data.sys.country,
+            city: weatherData.name,
+            country: weatherData.sys.country,
             lat: lat,
-            lon: lon
+            lon: lon,
           };
           this.currentLocationSubject.next(location);
-          this.currentWeatherSubject.next(data);
         },
         error: (error) => {
           console.error('Error getting location name:', error);
-        }
+        },
       });
   }
 
@@ -148,10 +139,28 @@ export class WeatherService {
       lon: lon.toString(),
       appid: environment.openWeatherApiKey,
       units: 'metric',
-      lang: 'es'
+      lang: 'es',
     };
 
-    return this.http.get<WeatherData>(`${environment.openWeatherApiUrl}`, { params });
+    return this.http
+      .get<WeatherData>(`${environment.openWeatherApiUrl}`, { params })
+      .pipe(
+        switchMap((weatherData) => {
+          // Actualizar la ubicación actual y los datos del clima
+          this.currentWeatherSubject.next(weatherData);
+
+          // Actualizar la ubicación en una única operación para evitar múltiples suscripciones
+          const location: GeoLocation = {
+            city: weatherData.name,
+            country: weatherData.sys.country,
+            lat: lat,
+            lon: lon,
+          };
+          this.currentLocationSubject.next(location);
+          
+          return of(weatherData); // Devolver el weatherData para mantener la cadena Observable
+        })
+      );
   }
 
   /**
@@ -164,10 +173,26 @@ export class WeatherService {
       q: city,
       appid: environment.openWeatherApiKey,
       units: 'metric',
-      lang: 'es'
+      lang: 'es',
     };
 
-    return this.http.get<WeatherData>(`${environment.openWeatherApiUrl}`, { params });
+    return this.http
+      .get<WeatherData>(`${environment.openWeatherApiUrl}`, { params })
+      .pipe(
+        switchMap((weatherData) => {
+          // Actualizar la ubicación actual y los datos del clima
+          this.currentWeatherSubject.next(weatherData);
+
+          // Actualizar la ubicación en una única operación para evitar múltiples suscripciones
+          const location = {
+            city: weatherData.name,
+            country: weatherData.sys.country,
+          };
+          this.currentLocationSubject.next(location);
+          
+          return of(weatherData); // Devolver el weatherData para mantener la cadena Observable
+        })
+      );
   }
 
   /**

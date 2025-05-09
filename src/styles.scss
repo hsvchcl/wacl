@@ -33,6 +33,16 @@ body {
   opacity: 1 !important;
 }
 
+// Estilos para el modal de ciudades
+.cities-modal-container {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
 // Estilos de las tarjetas del clima
 .weather-card {
   margin: 16px;
