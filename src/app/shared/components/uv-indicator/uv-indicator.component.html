@@ -1,26 +1,26 @@
-<div class="uv-card">
+<div class="uv-card" [ngStyle]="{'background': backgroundGradient}">
   <div class="uv-header">
     <h2>Índice UV</h2>
   </div>
   
   <div class="uv-content">
     <div class="uv-index-container">
-      <div class="uv-index" [ngStyle]="{'background-color': uvRiskColor}">
-        {{ uvIndex }}
+      <div class="uv-index" [ngStyle]="{'border-color': uvRiskColor}">
+        <span>{{ uvIndex }}</span>
       </div>
-      <div class="uv-level">
+      <div class="uv-level" [ngStyle]="{'color': uvRiskColor}">
         {{ uvRiskLevel }}
       </div>
     </div>
     
     <div class="uv-recommendations">
-      <h3>Recomendaciones:</h3>
+      <h3>Recomendaciones</h3>
       <ul>
-        <li *ngIf="uvIndex < 3">Puede estar afuera sin protección especial.</li>
-        <li *ngIf="uvIndex >= 3 && uvIndex < 6">Use protector solar y sombrero.</li>
-        <li *ngIf="uvIndex >= 6 && uvIndex < 8">Use protección solar con FPS 30+, busque sombra.</li>
-        <li *ngIf="uvIndex >= 8 && uvIndex < 11">Use protector solar, sombrero y evite el sol entre 10am-4pm.</li>
-        <li *ngIf="uvIndex >= 11">¡Extrema precaución! Evite estar afuera durante el mediodía.</li>
+        <li *ngIf="uvIndex < 3" class="recommendation-item">Puede estar afuera sin protección especial.</li>
+        <li *ngIf="uvIndex >= 3 && uvIndex < 6" class="recommendation-item">Use protector solar y sombrero.</li>
+        <li *ngIf="uvIndex >= 6 && uvIndex < 8" class="recommendation-item">Use protección solar con FPS 30+, busque sombra.</li>
+        <li *ngIf="uvIndex >= 8 && uvIndex < 11" class="recommendation-item">Use protector solar, sombrero y evite el sol entre 10am-4pm.</li>
+        <li *ngIf="uvIndex >= 11" class="recommendation-item">¡Extrema precaución! Evite estar afuera durante el mediodía.</li>
       </ul>
     </div>
   </div>
